@@ -81,12 +81,12 @@ const UserInformation = () => {
     <>
       <Container maxW="full" as="form" onSubmit={handleSubmit(onSubmit)}>
         <Heading size="sm" py={4}>
-          User Information
+          Информация о пользователе
         </Heading>
         <Box w={{ sm: "full", md: "50%" }}>
           <FormControl>
             <FormLabel color={color} htmlFor="name">
-              Full name
+              Полное имя
             </FormLabel>
             {editMode ? (
               <Input
@@ -107,7 +107,7 @@ const UserInformation = () => {
           </FormControl>
           <FormControl mt={4} isInvalid={!!errors.email}>
             <FormLabel color={color} htmlFor="email">
-              Email
+              Почта
             </FormLabel>
             {editMode ? (
               <Input
@@ -140,7 +140,7 @@ const UserInformation = () => {
             </Button>
             {editMode && (
               <Button onClick={onCancel} isDisabled={isSubmitting}>
-                Cancel
+                Отменить
               </Button>
             )}
           </Flex>

@@ -38,7 +38,7 @@ const Navbar = ({ type }: NavbarProps) => {
           : type == "Issue" ? addIssueModal.onOpen
           : addLaundryModal.onOpen}
         >
-          <Icon as={FaPlus} /> Add {type}
+          <Icon as={FaPlus} /> Добавить
         </Button>
         <AddUser isOpen={addUserModal.isOpen} onClose={addUserModal.onClose} />
         <AddItem isOpen={addItemModal.isOpen} onClose={addItemModal.onClose} />

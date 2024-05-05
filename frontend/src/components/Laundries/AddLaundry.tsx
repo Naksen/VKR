@@ -75,17 +75,17 @@ const AddLaundry = ({ isOpen, onClose }: AddLaundryProps) => {
       >
         <ModalOverlay />
         <ModalContent as="form" onSubmit={handleSubmit(onSubmit)}>
-          <ModalHeader>Add Laundry</ModalHeader>
+          <ModalHeader>Добавить прачечную</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
             <FormControl isRequired isInvalid={!!errors.room}>
-              <FormLabel htmlFor="room">Room</FormLabel>
+              <FormLabel htmlFor="room">Комната</FormLabel>
               <Input
                 id="room"
                 {...register("room", {
                   required: "Room is required.",
                 })}
-                placeholder="Room"
+                placeholder="Комната"
                 type="text"
               />
               {errors.room && (
@@ -93,7 +93,7 @@ const AddLaundry = ({ isOpen, onClose }: AddLaundryProps) => {
               )}
             </FormControl>
             <FormControl mt={4}>
-              <FormLabel htmlFor="washing_machine_number">Washing Machine Number</FormLabel>
+              <FormLabel htmlFor="washing_machine_number">Номер стиральной машины</FormLabel>
               <Input
                 id="washing_machine_number"
                 {...register("washing_machine_number")}
@@ -102,21 +102,20 @@ const AddLaundry = ({ isOpen, onClose }: AddLaundryProps) => {
               />
             </FormControl>
             <FormControl mt={4}>
-                <FormLabel htmlFor="is_busy">Is Busy?</FormLabel>
+                <FormLabel htmlFor="is_busy">Занята</FormLabel>
                 <Checkbox
                     id="is_busy"
                     {...register("is_busy")}
                     colorScheme="teal"
                 >
-                    Is Busy
                 </Checkbox>
             </FormControl>
           </ModalBody>
           <ModalFooter gap={3}>
             <Button variant="primary" type="submit" isLoading={isSubmitting}>
-              Save
+              Сохранить
             </Button>
-            <Button onClick={onClose}>Cancel</Button>
+            <Button onClick={onClose}>Отменить</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

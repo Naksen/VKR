@@ -56,12 +56,12 @@ const ChangePassword = () => {
     <>
       <Container maxW="full" as="form" onSubmit={handleSubmit(onSubmit)}>
         <Heading size="sm" py={4}>
-          Change Password
+          Изменить пароль
         </Heading>
         <Box w={{ sm: "full", md: "50%" }}>
           <FormControl isRequired isInvalid={!!errors.current_password}>
             <FormLabel color={color} htmlFor="current_password">
-              Current password
+              Текущий пароль
             </FormLabel>
             <Input
               id="current_password"
@@ -76,7 +76,7 @@ const ChangePassword = () => {
             )}
           </FormControl>
           <FormControl mt={4} isRequired isInvalid={!!errors.new_password}>
-            <FormLabel htmlFor="password">Set Password</FormLabel>
+            <FormLabel htmlFor="password">Новый пароль</FormLabel>
             <Input
               id="password"
               {...register("new_password", {
@@ -94,7 +94,7 @@ const ChangePassword = () => {
             )}
           </FormControl>
           <FormControl mt={4} isRequired isInvalid={!!errors.confirm_password}>
-            <FormLabel htmlFor="confirm_password">Confirm Password</FormLabel>
+            <FormLabel htmlFor="confirm_password">Подтвердить пароль</FormLabel>
             <Input
               id="confirm_password"
               {...register("confirm_password", {
@@ -103,7 +103,7 @@ const ChangePassword = () => {
                   value === getValues().new_password ||
                   "The passwords do not match",
               })}
-              placeholder="Password"
+              placeholder="Пароль"
               type="password"
             />
             {errors.confirm_password && (
@@ -118,7 +118,7 @@ const ChangePassword = () => {
             type="submit"
             isLoading={isSubmitting}
           >
-            Save
+            Сохранить
           </Button>
         </Box>
       </Container>

@@ -8,12 +8,12 @@ import { IoChatbox } from "react-icons/io5"
 import type { UserOut } from "../../client"
 
 const items = [
-  { icon: FiHome, title: "Dashboard", path: "/" },
+  { icon: FiHome, title: "Главная", path: "/" },
   { icon: FiBriefcase, title: "Items", path: "/items" },
-  { icon: MdLocalLaundryService, title: "Laundries", path: "/laundries" },
-  { icon: FiList, title: "PublicAreas", path: "/public_areas" },
-  { icon: IoChatbox, title: "Issues", path: "/issues" },
-  { icon: FiSettings, title: "User Settings", path: "/settings" },
+  { icon: MdLocalLaundryService, title: "Прачечные", path: "/laundries" },
+  { icon: FiList, title: "Общественные зоны", path: "/public_areas" },
+  { icon: IoChatbox, title: "Запросы", path: "/issues" },
+  { icon: FiSettings, title: "Настройки пользователя", path: "/settings" },
 ]
 
 interface SidebarItemsProps {
@@ -27,7 +27,7 @@ const SidebarItems = ({ onClose }: SidebarItemsProps) => {
   const currentUser = queryClient.getQueryData<UserOut>("currentUser")
 
   const finalItems = currentUser?.is_superuser
-    ? [...items, { icon: FiUsers, title: "Admin", path: "/admin" }]
+    ? [...items, { icon: FiUsers, title: "Админ", path: "/admin" }]
     : items
 
   const listItems = finalItems.map((item) => (

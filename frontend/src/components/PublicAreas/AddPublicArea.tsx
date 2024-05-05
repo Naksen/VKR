@@ -76,17 +76,17 @@ const AddPublicArea = ({ isOpen, onClose }: AddPublicAreaProps) => {
         >
             <ModalOverlay />
             <ModalContent as="form" onSubmit={handleSubmit(onSubmit)}>
-            <ModalHeader>Add Public Area</ModalHeader>
+            <ModalHeader>Добавить общественную зону</ModalHeader>
             <ModalCloseButton />
             <ModalBody pb={6}>
                 <FormControl isRequired isInvalid={!!errors.name}>
-                <FormLabel htmlFor="name">Name</FormLabel>
+                <FormLabel htmlFor="name">Название</FormLabel>
                 <Input
                     id="name"
                     {...register("name", {
-                    required: "Name is required.",
+                    required: "Название необходимо.",
                     })}
-                    placeholder="Name"
+                    placeholder="Название"
                     type="text"
                 />
                 {errors.name && (
@@ -94,16 +94,16 @@ const AddPublicArea = ({ isOpen, onClose }: AddPublicAreaProps) => {
                 )}
                 </FormControl>
                 <FormControl mt={4}>
-                <FormLabel htmlFor="description">Description</FormLabel>
+                <FormLabel htmlFor="description">Описание</FormLabel>
                 <Input
                     id="description"
                     {...register("description")}
-                    placeholder="Description"
+                    placeholder="Описание"
                     type="text"
                 />
                 </FormControl>
                 <FormControl mt={4}>
-                <FormLabel htmlFor="capacity">Capacity</FormLabel>
+                <FormLabel htmlFor="capacity">Вместительность</FormLabel>
                 <Input
                     id="capacity"
                     {...register("capacity")}
@@ -112,24 +112,24 @@ const AddPublicArea = ({ isOpen, onClose }: AddPublicAreaProps) => {
                 />
                 </FormControl>
                 <FormControl mt={4}>
-                <FormLabel htmlFor="area_type">Area Type</FormLabel>
+                <FormLabel htmlFor="area_type">Тип</FormLabel>
                 <Select
                     id="area_type"
                     {...register("area_type")}
                     defaultValue="other"
                 >
-                    <option value="sport">Sport</option>
-                    <option value="dancing">Dancing</option>
-                    <option value="gaming">Gaming</option>
-                    <option value="other">Other</option>
+                    <option value="sport">Спортивная</option>
+                    <option value="dancing">Танцевальная</option>
+                    <option value="gaming">Игровая</option>
+                    <option value="other">Другая</option>
                 </Select>
                 </FormControl>
             </ModalBody>
             <ModalFooter gap={3}>
                 <Button variant="primary" type="submit" isLoading={isSubmitting}>
-                Save
+                Сохранить
                 </Button>
-                <Button onClick={onClose}>Cancel</Button>
+                <Button onClick={onClose}>Отменить</Button>
             </ModalFooter>
             </ModalContent>
         </Modal>

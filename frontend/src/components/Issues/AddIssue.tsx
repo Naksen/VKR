@@ -77,63 +77,63 @@ const AddIssue = ({ isOpen, onClose }: AddIssueProps) => {
         >
           <ModalOverlay />
           <ModalContent as="form" onSubmit={handleSubmit(onSubmit)}>
-            <ModalHeader>Add Issue</ModalHeader>
+            <ModalHeader>Добавить запрос</ModalHeader>
             <ModalCloseButton />
             <ModalBody pb={6}>
               <FormControl isRequired isInvalid={!!errors.issue_type}>
-                <FormLabel htmlFor="issue_type">Issue Type</FormLabel>
+                <FormLabel htmlFor="issue_type">Тип</FormLabel>
                 <Select
                     id="issue_type"
                     {...register("issue_type")}
                     defaultValue="other"
                 >
-                    <option value="plumbing">Plumbing</option>
-                    <option value="electrics">Electrics</option>
-                    <option value="heating">Heating</option>
-                    <option value="furniture">Furniture</option>
-                    <option value="other">Other</option>
+                    <option value="plumbing">Сантехника</option>
+                    <option value="electrics">Электрика</option>
+                    <option value="heating">Отопление</option>
+                    <option value="furniture">Мебель</option>
+                    <option value="other">Другое</option>
                 </Select>
                 {errors.issue_type && (
                   <FormErrorMessage>{errors.issue_type.message}</FormErrorMessage>
                 )}
               </FormControl>
               <FormControl mt={4}>
-                <FormLabel htmlFor="status">Status</FormLabel>
+                <FormLabel htmlFor="status">Статус</FormLabel>
                 <Select
                     id="status"
                     {...register("status")}
                     defaultValue="new"
                 >
-                    <option value="new">New</option>
-                    <option value="in_progress">In Progress</option>
-                    <option value="completed">Completed</option>
-                    <option value="closed">Closed</option>
+                    <option value="new">Новый</option>
+                    <option value="in_progress">Выполняется</option>
+                    <option value="completed">Завершен</option>
+                    <option value="closed">Закрыт</option>
                 </Select>
               </FormControl>
               <FormControl mt={4}>
-                <FormLabel htmlFor="location">Location</FormLabel>
+                <FormLabel htmlFor="location">Местоположение</FormLabel>
                 <Input
                     id="location"
                     {...register("location")}
-                    placeholder="Location"
+                    placeholder="Местоположение"
                     type="text"
                 />
               </FormControl>
               <FormControl mt={4}>
-                <FormLabel htmlFor="description">Description</FormLabel>
+                <FormLabel htmlFor="description">Описание</FormLabel>
                 <Input
                     id="description"
                     {...register("description")}
-                    placeholder="Description"
+                    placeholder="Описание"
                     type="text"
                 />
               </FormControl>
             </ModalBody>
             <ModalFooter gap={3}>
               <Button variant="primary" type="submit" isLoading={isSubmitting}>
-                Save
+                Сохранить
               </Button>
-              <Button onClick={onClose}>Cancel</Button>
+              <Button onClick={onClose}>Отменить</Button>
             </ModalFooter>
           </ModalContent>
         </Modal>

@@ -53,7 +53,7 @@ function Laundries() {
               textAlign={{ base: "center", md: "left" }}
               pt={12}
             >
-              Laundries Management
+              Прачечные
             </Heading>
             <Navbar type={"Laundry"} />
             <TableContainer>
@@ -61,9 +61,9 @@ function Laundries() {
                 <Thead>
                   <Tr>
                     <Th>ID</Th>
-                    <Th>Room</Th>
-                    <Th>WM Number</Th>
-                    <Th>Is busy</Th>
+                    <Th>Комната</Th>
+                    <Th>Номер стиральной машины</Th>
+                    <Th>Занята</Th>
                   </Tr>
                 </Thead>
                 <Tbody>

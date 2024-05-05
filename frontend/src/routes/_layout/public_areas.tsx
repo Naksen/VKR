@@ -53,7 +53,7 @@ function PublicAreas() {
                 textAlign={{ base: "center", md: "left" }}
                 pt={12}
               >
-                Public Areas Management
+                Общественные зоны
               </Heading>
               <Navbar type={"PublicArea"} />
               <TableContainer>
@@ -61,10 +61,10 @@ function PublicAreas() {
                   <Thead>
                     <Tr>
                       <Th>ID</Th>
-                      <Th>Name</Th>
-                      <Th>Description</Th>
-                      <Th>Capacity</Th>
-                      <Th>Area Type</Th>
+                      <Th>Название</Th>
+                      <Th>Описание</Th>
+                      <Th>Вместительность</Th>
+                      <Th>Тип зоны</Th>
                     </Tr>
                   </Thead>
                   <Tbody>

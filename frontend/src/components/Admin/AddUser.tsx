@@ -86,11 +86,11 @@ const AddUser = ({ isOpen, onClose }: AddUserProps) => {
       >
         <ModalOverlay />
         <ModalContent as="form" onSubmit={handleSubmit(onSubmit)}>
-          <ModalHeader>Add User</ModalHeader>
+          <ModalHeader>Добавить пользователя</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
             <FormControl isRequired isInvalid={!!errors.email}>
-              <FormLabel htmlFor="email">Email</FormLabel>
+              <FormLabel htmlFor="email">Почта</FormLabel>
               <Input
                 id="email"
                 {...register("email", {
@@ -105,11 +105,11 @@ const AddUser = ({ isOpen, onClose }: AddUserProps) => {
               )}
             </FormControl>
             <FormControl mt={4} isInvalid={!!errors.full_name}>
-              <FormLabel htmlFor="name">Full name</FormLabel>
+              <FormLabel htmlFor="name">Полное имя</FormLabel>
               <Input
                 id="name"
                 {...register("full_name")}
-                placeholder="Full name"
+                placeholder="Полное имя"
                 type="text"
               />
               {errors.full_name && (
@@ -117,7 +117,7 @@ const AddUser = ({ isOpen, onClose }: AddUserProps) => {
               )}
             </FormControl>
             <FormControl mt={4} isRequired isInvalid={!!errors.password}>
-              <FormLabel htmlFor="password">Set Password</FormLabel>
+              <FormLabel htmlFor="password">Пароль</FormLabel>
               <Input
                 id="password"
                 {...register("password", {
@@ -127,7 +127,7 @@ const AddUser = ({ isOpen, onClose }: AddUserProps) => {
                     message: "Password must be at least 8 characters",
                   },
                 })}
-                placeholder="Password"
+                placeholder="Пароль"
                 type="password"
               />
               {errors.password && (
@@ -139,7 +139,7 @@ const AddUser = ({ isOpen, onClose }: AddUserProps) => {
               isRequired
               isInvalid={!!errors.confirm_password}
             >
-              <FormLabel htmlFor="confirm_password">Confirm Password</FormLabel>
+              <FormLabel htmlFor="confirm_password">Подтвердить пароль</FormLabel>
               <Input
                 id="confirm_password"
                 {...register("confirm_password", {
@@ -148,7 +148,7 @@ const AddUser = ({ isOpen, onClose }: AddUserProps) => {
                     value === getValues().password ||
                     "The passwords do not match",
                 })}
-                placeholder="Password"
+                placeholder="Пароль"
                 type="password"
               />
               {errors.confirm_password && (
@@ -160,21 +160,21 @@ const AddUser = ({ isOpen, onClose }: AddUserProps) => {
             <Flex mt={4}>
               <FormControl>
                 <Checkbox {...register("is_superuser")} colorScheme="teal">
-                  Is superuser?
+                  Суперпользователь
                 </Checkbox>
               </FormControl>
               <FormControl>
                 <Checkbox {...register("is_active")} colorScheme="teal">
-                  Is active?
+                  Активный
                 </Checkbox>
               </FormControl>
             </Flex>
           </ModalBody>
           <ModalFooter gap={3}>
             <Button variant="primary" type="submit" isLoading={isSubmitting}>
-              Save
+              Сохранить
             </Button>
-            <Button onClick={onClose}>Cancel</Button>
+            <Button onClick={onClose}>Отменить</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

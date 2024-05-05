@@ -72,22 +72,22 @@ const DeleteConfirmation = ({ isOpen, onClose }: DeleteProps) => {
             <AlertDialogHeader>Confirmation Required</AlertDialogHeader>
 
             <AlertDialogBody>
-              All your account data will be{" "}
-              <strong>permanently deleted.</strong> If you are sure, please
-              click <strong>"Confirm"</strong> to proceed. This action cannot be
-              undone.
+              Все данные вашей учетной записи будут{" "}
+              <strong>удалены безвозвратно.</strong> Если вы уверены, пожалуйста
+              нажмите <strong>"Подтвердить"</strong>, чтобы продолжить. Это действие невозможно
+              отменить.
             </AlertDialogBody>
 
             <AlertDialogFooter gap={3}>
               <Button variant="danger" type="submit" isLoading={isSubmitting}>
-                Confirm
+                Подтвердить
               </Button>
               <Button
                 ref={cancelRef}
                 onClick={onClose}
                 isDisabled={isSubmitting}
               >
-                Cancel
+                Отменить
               </Button>
             </AlertDialogFooter>
           </AlertDialogContent>

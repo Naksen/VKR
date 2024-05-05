@@ -198,22 +198,22 @@ def delete_user(
     session: SessionDep, current_user: CurrentUser, user_id: int
 ) -> Message:
     """
-    Delete a user.
+    Удалить пользователя.
     """
     user = session.get(User, user_id)
     if not user:
-        raise HTTPException(status_code=404, detail="User not found")
+        raise HTTPException(status_code=404, detail="Пользователь не найден")
     elif user != current_user and not current_user.is_superuser:
         raise HTTPException(
-            status_code=403, detail="The user doesn't have enough privileges"
+            status_code=403, detail="Пользователь не является суперпользователем"
         )
     elif user == current_user and current_user.is_superuser:
         raise HTTPException(
-            status_code=403, detail="Super users are not allowed to delete themselves"
+            status_code=403, detail="Суперпользователи не имею права удалять сами себя"
         )
 
     statement = delete(Item).where(col(Item.owner_id) == user_id)
     session.exec(statement)  # type: ignore
     session.delete(user)
     session.commit()
-    return Message(message="User deleted successfully")
+    return Message(message="Пользователь удален успешно")

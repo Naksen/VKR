@@ -53,7 +53,7 @@ function Issues() {
                 textAlign={{ base: "center", md: "left" }}
                 pt={12}
               >
-                Issues Management
+                Запросы
               </Heading>
               <Navbar type={"Issue"} />
               <TableContainer>
@@ -61,10 +61,10 @@ function Issues() {
                   <Thead>
                     <Tr>
                       <Th>ID</Th>
-                      <Th>Issue type</Th>
-                      <Th>Status</Th>
-                      <Th>Location</Th>
-                      <Th>Desctiprion</Th>
+                      <Th>Тип</Th>
+                      <Th>Статус</Th>
+                      <Th>Местоположение</Th>
+                      <Th>Описание</Th>
                     </Tr>
                   </Thead>
                   <Tbody>

@@ -56,18 +56,18 @@ function Admin() {
               textAlign={{ base: "center", md: "left" }}
               pt={12}
             >
-              User Management
+              Управление пользователями
             </Heading>
             <Navbar type={"User"} />
             <TableContainer>
               <Table fontSize="md" size={{ base: "sm", md: "md" }}>
                 <Thead>
                   <Tr>
-                    <Th>Full name</Th>
-                    <Th>Email</Th>
-                    <Th>Role</Th>
-                    <Th>Status</Th>
-                    <Th>Actions</Th>
+                    <Th>Полное имя</Th>
+                    <Th>Почта</Th>
+                    <Th>Роль</Th>
+                    <Th>Статус</Th>
+                    <Th>Действия</Th>
                   </Tr>
                 </Thead>
                 <Tbody>
@@ -77,7 +77,7 @@ function Admin() {
                         {user.full_name || "N/A"}
                         {currentUser?.id === user.id && (
                           <Badge ml="1" colorScheme="teal">
-                            You
+                            Вы
                           </Badge>
                         )}
                       </Td>

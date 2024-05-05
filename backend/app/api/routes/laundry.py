@@ -15,7 +15,7 @@ def read_laundries(
     session: SessionDep, current_user: CurrentUser, skip: int = 0, limit: int = 100
 ) -> Any:
     """
-    Retrieve laundries.
+    Получить постирочные.
     """
 
     if current_user.is_superuser:
