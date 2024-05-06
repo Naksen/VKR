@@ -8,6 +8,7 @@ import type { PublicAreaOut } from '../models/PublicAreaOut';
 import type { PublicAreasOut } from '../models/PublicAreasOut';
 import type { PublicAreaUpdate } from '../models/PublicAreaUpdate';
 import type { ScheduleCreate } from '../models/ScheduleCreate';
+import type { SchedulesOut } from '../models/SchedulesOut';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
@@ -127,6 +128,28 @@ export class PublicAreaService {
         return __request(OpenAPI, {
             method: 'DELETE',
             url: '/api/v1/public_area/{id}',
+            path: {
+                'id': id,
+            },
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+
+    /**
+     * Get Public Area Schedules
+     * @returns SchedulesOut Successful Response
+     * @throws ApiError
+     */
+    public static getPublicAreaSchedules({
+        id,
+    }: {
+        id: number,
+    }): CancelablePromise<SchedulesOut> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/public_area/{id}/schedules',
             path: {
                 'id': id,
             },

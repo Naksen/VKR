@@ -11,6 +11,7 @@ class UserBase(SQLModel):
     email: str = Field(unique=True, index=True)
     is_active: bool = True
     is_superuser: bool = False
+    is_technical_staff: bool | None = False
     full_name: str | None = None
 
     phone: str | None = None

@@ -6,6 +6,8 @@ import type { LaundriesOut } from '../models/LaundriesOut';
 import type { LaundryCreate } from '../models/LaundryCreate';
 import type { LaundryOut } from '../models/LaundryOut';
 import type { Message } from '../models/Message';
+import type { ScheduleCreate } from '../models/ScheduleCreate';
+import type { SchedulesOut } from '../models/SchedulesOut';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
@@ -15,7 +17,7 @@ export class LaundriesService {
 
     /**
      * Read Laundries
-     * Retrieve laundries.
+     * Получить постирочные.
      * @returns LaundriesOut Successful Response
      * @throws ApiError
      */
@@ -101,6 +103,54 @@ export class LaundriesService {
             path: {
                 'id': id,
             },
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+
+    /**
+     * Get Laundry Schedules
+     * @returns SchedulesOut Successful Response
+     * @throws ApiError
+     */
+    public static getLaundrySchedules({
+        id,
+    }: {
+        id: number,
+    }): CancelablePromise<SchedulesOut> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/laundries/{id}/schedules',
+            path: {
+                'id': id,
+            },
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+
+    /**
+     * Reserve Laundry
+     * @returns Message Successful Response
+     * @throws ApiError
+     */
+    public static reserveLaundry({
+        id,
+        requestBody,
+    }: {
+        id: number,
+        requestBody: ScheduleCreate,
+    }): CancelablePromise<Message> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/v1/laundries/{id}/reserve',
+            path: {
+                'id': id,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
             errors: {
                 422: `Validation Error`,
             },

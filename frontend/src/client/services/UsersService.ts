@@ -196,7 +196,7 @@ export class UsersService {
 
     /**
      * Delete User
-     * Delete a user.
+     * Удалить пользователя.
      * @returns Message Successful Response
      * @throws ApiError
      */

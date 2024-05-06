@@ -9,19 +9,22 @@ import {
 import { BsThreeDotsVertical } from "react-icons/bs"
 import { FiEdit, FiTrash } from "react-icons/fi"
 
-import type { ItemOut, UserOut } from "../../client"
+import type { ItemOut, UserOut, LaundryOut, PublicAreaOut } from "../../client"
 import EditUser from "../Admin/EditUser"
 import EditItem from "../Items/EditItem"
+import ReserveLaundry from "../Laundries/ReserveLaundry"
+import ReservePublicArea from "../PublicAreas/ReservePublicArea"
 import Delete from "./DeleteAlert"
 
 interface ActionsMenuProps {
   type: string
-  value: ItemOut | UserOut
+  value: ItemOut | UserOut | LaundryOut | PublicAreaOut
   disabled?: boolean
 }
 
 const ActionsMenu = ({ type, value, disabled }: ActionsMenuProps) => {
   const editUserModal = useDisclosure()
+  const reserveLaundryModal = useDisclosure()
   const deleteModal = useDisclosure()
 
   return (
@@ -38,14 +41,20 @@ const ActionsMenu = ({ type, value, disabled }: ActionsMenuProps) => {
             onClick={editUserModal.onOpen}
             icon={<FiEdit fontSize="16px" />}
           >
-            Edit {type}
+            Изменить
           </MenuItem>
           <MenuItem
             onClick={deleteModal.onOpen}
             icon={<FiTrash fontSize="16px" />}
             color="ui.danger"
           >
-            Delete {type}
+            Удалить
+          </MenuItem>
+          <MenuItem
+            onClick={reserveLaundryModal.onOpen}
+            icon={<FiEdit fontSize="16px" />}
+          >
+            Забронировать
           </MenuItem>
         </MenuList>
         {type === "User" ? (
@@ -54,11 +63,23 @@ const ActionsMenu = ({ type, value, disabled }: ActionsMenuProps) => {
             isOpen={editUserModal.isOpen}
             onClose={editUserModal.onClose}
           />
-        ) : (
+        ) : type == "Item" ?(
           <EditItem
             item={value as ItemOut}
             isOpen={editUserModal.isOpen}
             onClose={editUserModal.onClose}
+          />
+        ) : type == "Laundry" ? (
+          <ReserveLaundry
+            laundry={value as LaundryOut}
+            isOpen={reserveLaundryModal.isOpen}
+            onClose={reserveLaundryModal.onClose}
+          />
+        ) : (
+          <ReservePublicArea
+            public_area={value as PublicAreaOut}
+            isOpen={reserveLaundryModal.isOpen}
+            onClose={reserveLaundryModal.onClose}
           />
         )}
         <Delete

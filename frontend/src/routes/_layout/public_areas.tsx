@@ -15,7 +15,7 @@ import { createFileRoute } from "@tanstack/react-router"
 import { useQuery } from "react-query"
 
 import { type ApiError, PublicAreaService } from "../../client"
-// import ActionsMenu from "../../components/Common/ActionsMenu"
+import ActionsMenu from "../../components/Common/ActionsMenu"
 import Navbar from "../../components/Common/Navbar"
 import useCustomToast from "../../hooks/useCustomToast"
 
@@ -65,6 +65,7 @@ function PublicAreas() {
                       <Th>Описание</Th>
                       <Th>Вместительность</Th>
                       <Th>Тип зоны</Th>
+                      <Th>Действия</Th>
                     </Tr>
                   </Thead>
                   <Tbody>
@@ -75,6 +76,9 @@ function PublicAreas() {
                         <Td>{public_area.description}</Td>
                         <Td>{public_area.capacity}</Td>
                         <Td>{public_area.area_type}</Td>
+                        <Td>
+                        <ActionsMenu type={"PublicArea"} value={public_area} />
+                      </Td>
                       </Tr>
                     ))}
                   </Tbody>

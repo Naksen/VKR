@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from app.api.routes import items, login, users, utils, laundry, issue, public_area
+from app.api.routes import items, login, users, utils, laundry, issue, public_area, schedules, technical
 
 api_router = APIRouter()
 api_router.include_router(login.router, tags=["login"])
@@ -10,3 +10,5 @@ api_router.include_router(items.router, prefix="/items", tags=["items"])
 api_router.include_router(laundry.router, prefix="/laundries", tags=["laundries"])
 api_router.include_router(issue.router, prefix="/issues", tags=["issues"])
 api_router.include_router(public_area.router, prefix="/public_area", tags=["public_area"])
+api_router.include_router(schedules.router, prefix="/schedules", tags=["schedules"])
+api_router.include_router(technical.router, prefix="/technical", tags=["technical"])

@@ -1,5 +1,5 @@
 from typing import Any
-
+import datetime
 from fastapi import APIRouter, HTTPException, Depends
 from sqlmodel import func, select, Session
 
@@ -144,6 +144,23 @@ def delete_public_area(session: SessionDep, current_user: CurrentUser, id: int) 
     session.commit()
     return Message(message="Public area deleted successfully")
 
+@router.get("/{id}/schedules", response_model=SchedulesOut)
+def get_public_area_schedules(session: SessionDep, current_user: CurrentUser, id: int) -> Any:
+
+    laundry = session.get(PublicArea, id)
+    if not laundry:
+        raise HTTPException(status_code=404, detail="Laundry not found")
+    
+    statement = (
+        select(Schedule)
+        .join(PublicAreaSchedule, PublicAreaSchedule.schedule_id == Schedule.id)
+        .where(PublicAreaSchedule.public_area_id == id)
+        .where(Schedule.start_time > datetime.datetime.now())
+    )
+
+    schedules = session.exec(statement).all()
+
+    return SchedulesOut(data=schedules, count=len(schedules))
 
 @router.post("/{id}/reserve")
 def reserve_public_area(
@@ -168,7 +185,12 @@ def reserve_public_area(
     if not is_allowed:
         raise HTTPException(status_code=400, detail="New schedule is not allowed")
     
-    current_schedule = Schedule.model_validate(schedule_in)
+    current_schedule = Schedule(
+        start_time=schedule_in.start_time,
+        end_time=schedule_in.end_time,
+        user_id=current_user.id
+    )
+
     session.add(current_schedule)
     session.commit()
     session.refresh(current_schedule)

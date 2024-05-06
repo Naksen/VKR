@@ -15,7 +15,7 @@ import { createFileRoute } from "@tanstack/react-router"
 import { useQuery } from "react-query"
 
 import { type ApiError, LaundriesService } from "../../client"
-// import ActionsMenu from "../../components/Common/ActionsMenu"
+import ActionsMenu from "../../components/Common/ActionsMenu"
 import Navbar from "../../components/Common/Navbar"
 import useCustomToast from "../../hooks/useCustomToast"
 
@@ -63,7 +63,7 @@ function Laundries() {
                     <Th>ID</Th>
                     <Th>Комната</Th>
                     <Th>Номер стиральной машины</Th>
-                    <Th>Занята</Th>
+                    <Th>Действия</Th>
                   </Tr>
                 </Thead>
                 <Tbody>
@@ -72,7 +72,9 @@ function Laundries() {
                       <Td>{laundry.id}</Td>
                       <Td>{laundry.room}</Td>
                       <Td>{laundry.washing_machine_number}</Td>
-                      <Td>{laundry.is_busy}</Td>
+                      <Td>
+                        <ActionsMenu type={"Laundry"} value={laundry} />
+                      </Td>
                     </Tr>
                   ))}
                 </Tbody>

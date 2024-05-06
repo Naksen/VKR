@@ -14,6 +14,14 @@ export const $UserCreate = {
         is_superuser: {
             type: 'boolean',
         },
+        is_technical_staff: {
+            type: 'any-of',
+            contains: [{
+                type: 'boolean',
+            }, {
+                type: 'null',
+            }],
+        },
         full_name: {
             type: 'any-of',
             contains: [{

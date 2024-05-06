@@ -53,3 +53,24 @@ class IssueOut(IssueBase):
 class IssuesOut(SQLModel):
     data: list[IssueOut]
     count: int
+
+class TechnicalIssueOut(SQLModel):
+    full_name: str | None
+    email: str
+    issue_type: IIssueType = Field(
+        default=IIssueType.other,
+        sa_column=Column(ChoiceType(IIssueType, impl=String())),
+    )
+    status: IStatusEnum = Field(
+        default=IStatusEnum.new,
+        sa_column=Column(ChoiceType(IStatusEnum, impl=String())),
+    )
+    id: int
+
+class TechnicalIssuesOut(SQLModel):
+    data: list[TechnicalIssueOut]
+    count: int
+
+class IssueDetails(SQLModel):
+    location: str | None
+    description: str | None
