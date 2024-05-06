@@ -20,7 +20,7 @@ const tabsConfig = [
   { title: "Мой профиль", component: UserInformation },
   { title: "Пароль", component: ChangePassword },
   { title: "Внешний вид", component: Appearance },
-  { title: "Опасная зона", component: DeleteAccount },
+  { title: "Удаление аккаунта", component: DeleteAccount },
 ]
 
 export const Route = createFileRoute("/_layout/settings")({

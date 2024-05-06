@@ -128,6 +128,74 @@ const UserInformation = () => {
               <FormErrorMessage>{errors.email.message}</FormErrorMessage>
             )}
           </FormControl>
+            <FormControl mt={4} isInvalid={!!errors.phone}>
+              <FormLabel htmlFor="phone">Телефон</FormLabel>
+              {editMode ? (
+              <Input
+                id="phone"
+                {...register("phone")}
+                type="text"
+              />
+              ) : (
+                <Text size="md" py={2}>
+                  {currentUser?.phone}
+                </Text>
+              )}
+              {errors.phone && (
+                <FormErrorMessage>{errors.phone.message}</FormErrorMessage>
+              )}
+            </FormControl>
+            <FormControl mt={4} isInvalid={!!errors.room}>
+              <FormLabel htmlFor="room">Комната</FormLabel>
+              {editMode ? (
+              <Input
+                id="room"
+                {...register("room")}
+                type="text"
+              />
+              ) : (
+                <Text size="md" py={2}>
+                  {currentUser?.room}
+                </Text>
+              )}
+              {errors.room && (
+                <FormErrorMessage>{errors.room.message}</FormErrorMessage>
+              )}
+            </FormControl>
+            <FormControl mt={4} isInvalid={!!errors.study_group}>
+              <FormLabel htmlFor="study_group">Учебная группа</FormLabel>
+              {editMode ? (
+              <Input
+                id="study_group"
+                {...register("study_group")}
+                type="text"
+              />
+              ) : (
+                <Text size="md" py={2}>
+                  {currentUser?.study_group}
+                </Text>
+              )}
+              {errors.study_group && (
+                <FormErrorMessage>{errors.study_group.message}</FormErrorMessage>
+              )}
+            </FormControl>
+            <FormControl mt={4} isInvalid={!!errors.institute}>
+              <FormLabel htmlFor="institute">Институт</FormLabel>
+              {editMode ? (
+              <Input
+                id="institute"
+                {...register("institute")}
+                type="text"
+              />
+              ) : (
+                <Text size="md" py={2}>
+                  {currentUser?.study_group}
+                </Text>
+              )}
+              {errors.institute && (
+                <FormErrorMessage>{errors.institute.message}</FormErrorMessage>
+              )}
+            </FormControl>
           <Flex mt={4} gap={3}>
             <Button
               variant="primary"
@@ -136,7 +204,7 @@ const UserInformation = () => {
               isLoading={editMode ? isSubmitting : false}
               isDisabled={editMode ? !isDirty || !getValues("email") : false}
             >
-              {editMode ? "Save" : "Edit"}
+              {editMode ? "Сохранить" : "Изменить"}
             </Button>
             {editMode && (
               <Button onClick={onCancel} isDisabled={isSubmitting}>

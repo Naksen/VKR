@@ -66,7 +66,7 @@ const ChangePassword = () => {
             <Input
               id="current_password"
               {...register("current_password")}
-              placeholder="Password"
+              placeholder="Пароль"
               type="password"
             />
             {errors.current_password && (
@@ -86,7 +86,7 @@ const ChangePassword = () => {
                   message: "Password must be at least 8 characters",
                 },
               })}
-              placeholder="Password"
+              placeholder="Пароль"
               type="password"
             />
             {errors.new_password && (

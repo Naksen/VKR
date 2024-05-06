@@ -6,7 +6,7 @@ import {
   MenuItem,
   MenuList,
 } from "@chakra-ui/react"
-import { FaUserAstronaut } from "react-icons/fa"
+import { FaUser  } from "react-icons/fa"
 import { FiLogOut, FiUser } from "react-icons/fi"
 
 import { Link } from "@tanstack/react-router"
@@ -32,7 +32,7 @@ const UserMenu = () => {
           <MenuButton
             as={IconButton}
             aria-label="Options"
-            icon={<FaUserAstronaut color="white" fontSize="18px" />}
+            icon={<FaUser color="white" fontSize="18px" />}
             bg="ui.main"
             isRound
           />

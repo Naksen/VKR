@@ -102,7 +102,7 @@ function Login() {
             <Input
               {...register("password")}
               type={show ? "text" : "password"}
-              placeholder="Password"
+              placeholder="Пароль"
             />
             <InputRightElement
               color="gray.400"

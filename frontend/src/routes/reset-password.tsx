@@ -100,7 +100,7 @@ function ResetPassword() {
               message: "Password must be at least 8 characters",
             },
           })}
-          placeholder="Password"
+          placeholder="Пароль"
           type="password"
         />
         {errors.new_password && (
@@ -117,7 +117,7 @@ function ResetPassword() {
               value === getValues().new_password ||
               "The passwords do not match",
           })}
-          placeholder="Password"
+          placeholder="Пароль"
           type="password"
         />
         {errors.confirm_password && (
