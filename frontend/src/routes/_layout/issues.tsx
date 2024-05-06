@@ -31,7 +31,7 @@ function Issues() {
       isLoading,
       isError,
       error,
-    } = useQuery("public_areas", () => IssuesService.readIssues({}))
+    } = useQuery("issues", () => IssuesService.readIssues({}))
   
     if (isError) {
       const errDetail = (error as ApiError).body?.detail

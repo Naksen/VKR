@@ -50,6 +50,7 @@ const AddUser = ({ isOpen, onClose }: AddUserProps) => {
       confirm_password: "",
       is_superuser: false,
       is_active: false,
+      is_technical_staff: false,
     },
   })
 
@@ -166,6 +167,11 @@ const AddUser = ({ isOpen, onClose }: AddUserProps) => {
               <FormControl>
                 <Checkbox {...register("is_active")} colorScheme="teal">
                   Активный
+                </Checkbox>
+              </FormControl>
+              <FormControl>
+                <Checkbox {...register("is_technical_staff")} colorScheme="teal">
+                  Техперсонал
                 </Checkbox>
               </FormControl>
             </Flex>

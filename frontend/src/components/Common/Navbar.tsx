@@ -6,6 +6,8 @@ import AddItem from "../Items/AddItem"
 import AddLaundry from "../Laundries/AddLaundry"
 import AddPublicArea from "../PublicAreas/AddPublicArea"
 import AddIssue from "../Issues/AddIssue"
+import MyLaundrySchedules from "../Laundries/MyLaundryBooking"
+import MyPublicAreaSchedules from "../PublicAreas/MyPublicAreaBooking"
 
 interface NavbarProps {
   type: string
@@ -17,6 +19,8 @@ const Navbar = ({ type }: NavbarProps) => {
   const addLaundryModal = useDisclosure()
   const addPublicAreaModal = useDisclosure()
   const addIssueModal = useDisclosure()
+  const myLaundrySchedulesModal = useDisclosure()
+  const myPublicAreaSchedulesModal = useDisclosure()
 
   return (
     <>
@@ -40,11 +44,29 @@ const Navbar = ({ type }: NavbarProps) => {
         >
           <Icon as={FaPlus} /> Добавить
         </Button>
+        {type === "Laundry" && (
+          <Button
+            variant="primary"
+            onClick={myLaundrySchedulesModal.onOpen}
+          >
+            Мои бронирования
+          </Button>
+        )}
+        {type === "PublicArea" && (
+          <Button
+            variant="primary"
+            onClick={myPublicAreaSchedulesModal.onOpen}
+          >
+            Мои бронирования
+          </Button>
+        )}
         <AddUser isOpen={addUserModal.isOpen} onClose={addUserModal.onClose} />
         <AddItem isOpen={addItemModal.isOpen} onClose={addItemModal.onClose} />
         <AddLaundry isOpen={addLaundryModal.isOpen} onClose={addLaundryModal.onClose} />
         <AddPublicArea isOpen={addPublicAreaModal.isOpen} onClose={addPublicAreaModal.onClose} />
         <AddIssue isOpen={addIssueModal.isOpen} onClose={addIssueModal.onClose} />
+        <MyLaundrySchedules isOpen={myLaundrySchedulesModal.isOpen} onClose={myLaundrySchedulesModal.onClose} />
+        <MyPublicAreaSchedules isOpen={myPublicAreaSchedulesModal.isOpen} onClose={myPublicAreaSchedulesModal.onClose} />
       </Flex>
     </>
   )

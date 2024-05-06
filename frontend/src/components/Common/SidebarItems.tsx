@@ -1,6 +1,6 @@
 import { Box, Flex, Icon, Text, useColorModeValue } from "@chakra-ui/react"
 import { Link } from "@tanstack/react-router"
-import { FiBriefcase, FiHome, FiSettings, FiUsers, FiList } from "react-icons/fi"
+import { FiHome, FiSettings, FiUsers, FiList } from "react-icons/fi"
 import { useQueryClient } from "react-query"
 import { MdLocalLaundryService } from "react-icons/md"
 import { IoChatbox } from "react-icons/io5"
@@ -9,7 +9,6 @@ import type { UserOut } from "../../client"
 
 const items = [
   { icon: FiHome, title: "Главная", path: "/" },
-  { icon: FiBriefcase, title: "Items", path: "/items" },
   { icon: MdLocalLaundryService, title: "Прачечные", path: "/laundries" },
   { icon: FiList, title: "Общественные зоны", path: "/public_areas" },
   { icon: IoChatbox, title: "Запросы", path: "/issues" },
