@@ -56,11 +56,11 @@ const UserInformation = () => {
 
   const mutation = useMutation(updateInfo, {
     onSuccess: () => {
-      showToast("Success!", "User updated successfully.", "success")
+      showToast("Успех!", "Пользователь обновлен успешно.", "success")
     },
     onError: (err: ApiError) => {
       const errDetail = err.body?.detail
-      showToast("Something went wrong.", `${errDetail}`, "error")
+      showToast("Что-то пошло не так.", `${errDetail}`, "error")
     },
     onSettled: () => {
       queryClient.invalidateQueries("users")

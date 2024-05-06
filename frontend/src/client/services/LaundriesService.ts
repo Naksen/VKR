@@ -5,6 +5,7 @@
 import type { LaundriesOut } from '../models/LaundriesOut';
 import type { LaundryCreate } from '../models/LaundryCreate';
 import type { LaundryOut } from '../models/LaundryOut';
+import type { LaundryUpdate } from '../models/LaundryUpdate';
 import type { Message } from '../models/Message';
 import type { ScheduleCreate } from '../models/ScheduleCreate';
 import type { SchedulesOut } from '../models/SchedulesOut';
@@ -80,6 +81,32 @@ export class LaundriesService {
             path: {
                 'id': id,
             },
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+
+    /**
+     * Update Laundry
+     * @returns LaundryOut Successful Response
+     * @throws ApiError
+     */
+    public static updateLaundry({
+        id,
+        requestBody,
+    }: {
+        id: number,
+        requestBody: LaundryUpdate,
+    }): CancelablePromise<LaundryOut> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/api/v1/laundries/{id}',
+            path: {
+                'id': id,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
             errors: {
                 422: `Validation Error`,
             },

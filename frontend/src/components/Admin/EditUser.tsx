@@ -58,12 +58,12 @@ const EditUser = ({ user, isOpen, onClose }: EditUserProps) => {
 
   const mutation = useMutation(updateUser, {
     onSuccess: () => {
-      showToast("Success!", "User updated successfully.", "success")
+      showToast("Успех!", "Пользователь обновлен успешно.", "success")
       onClose()
     },
     onError: (err: ApiError) => {
       const errDetail = err.body?.detail
-      showToast("Something went wrong.", `${errDetail}`, "error")
+      showToast("Что-то пошло не так", `${errDetail}`, "error")
     },
     onSettled: () => {
       queryClient.invalidateQueries("users")
@@ -92,18 +92,17 @@ const EditUser = ({ user, isOpen, onClose }: EditUserProps) => {
       >
         <ModalOverlay />
         <ModalContent as="form" onSubmit={handleSubmit(onSubmit)}>
-          <ModalHeader>Edit User</ModalHeader>
+          <ModalHeader>Изменить пользователя</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
             <FormControl isInvalid={!!errors.email}>
-              <FormLabel htmlFor="email">Email</FormLabel>
+              <FormLabel htmlFor="email">Почта</FormLabel>
               <Input
                 id="email"
                 {...register("email", {
                   required: "Email is required",
                   pattern: emailPattern,
                 })}
-                placeholder="Email"
                 type="email"
               />
               {errors.email && (
@@ -111,11 +110,55 @@ const EditUser = ({ user, isOpen, onClose }: EditUserProps) => {
               )}
             </FormControl>
             <FormControl mt={4}>
-              <FormLabel htmlFor="name">Full name</FormLabel>
+              <FormLabel htmlFor="name">Полное имя</FormLabel>
               <Input id="name" {...register("full_name")} type="text" />
             </FormControl>
+            <FormControl mt={4} isInvalid={!!errors.phone}>
+              <FormLabel htmlFor="phone">Телефон</FormLabel>
+              <Input
+                id="phone"
+                {...register("phone")}
+                type="text"
+              />
+              {errors.phone && (
+                <FormErrorMessage>{errors.phone.message}</FormErrorMessage>
+              )}
+            </FormControl>
+            <FormControl mt={4} isInvalid={!!errors.room}>
+              <FormLabel htmlFor="room">Комната</FormLabel>
+              <Input
+                id="room"
+                {...register("room")}
+                type="text"
+              />
+              {errors.room && (
+                <FormErrorMessage>{errors.room.message}</FormErrorMessage>
+              )}
+            </FormControl>
+            <FormControl mt={4} isInvalid={!!errors.study_group}>
+              <FormLabel htmlFor="study_group">Учебная группа</FormLabel>
+              <Input
+                id="study_group"
+                {...register("study_group")}
+                type="text"
+              />
+              {errors.study_group && (
+                <FormErrorMessage>{errors.study_group.message}</FormErrorMessage>
+              )}
+            </FormControl>
+            <FormControl mt={4} isInvalid={!!errors.institute}>
+              <FormLabel htmlFor="institute">Институт</FormLabel>
+              <Input
+                id="institute"
+                {...register("institute")}
+                type="text"
+              />
+              {errors.institute && (
+                <FormErrorMessage>{errors.institute.message}</FormErrorMessage>
+              )}
+            </FormControl>
             <FormControl mt={4} isInvalid={!!errors.password}>
-              <FormLabel htmlFor="password">Set Password</FormLabel>
+              <FormLabel htmlFor="password">Новый пароль</FormLabel>
               <Input
                 id="password"
                 {...register("password", {
@@ -124,7 +167,7 @@ const EditUser = ({ user, isOpen, onClose }: EditUserProps) => {
                     message: "Password must be at least 8 characters",
                   },
                 })}
-                placeholder="Password"
+                placeholder="Пароль"
                 type="password"
               />
               {errors.password && (
@@ -132,7 +175,7 @@ const EditUser = ({ user, isOpen, onClose }: EditUserProps) => {
               )}
             </FormControl>
             <FormControl mt={4} isInvalid={!!errors.confirm_password}>
-              <FormLabel htmlFor="confirm_password">Confirm Password</FormLabel>
+              <FormLabel htmlFor="confirm_password">Подтвердить пароль</FormLabel>
               <Input
                 id="confirm_password"
                 {...register("confirm_password", {
@@ -140,7 +183,7 @@ const EditUser = ({ user, isOpen, onClose }: EditUserProps) => {
                     value === getValues().password ||
                     "The passwords do not match",
                 })}
-                placeholder="Password"
+                placeholder="Пароль"
                 type="password"
               />
               {errors.confirm_password && (
@@ -152,12 +195,17 @@ const EditUser = ({ user, isOpen, onClose }: EditUserProps) => {
             <Flex>
               <FormControl mt={4}>
                 <Checkbox {...register("is_superuser")} colorScheme="teal">
-                  Is superuser?
+                  Суперпользователь
                 </Checkbox>
               </FormControl>
               <FormControl mt={4}>
                 <Checkbox {...register("is_active")} colorScheme="teal">
-                  Is active?
+                  Активный
+                </Checkbox>
+              </FormControl>
+              <FormControl mt={4}>
+                <Checkbox {...register("is_technical_staff")} colorScheme="teal">
+                  Техперсонал
                 </Checkbox>
               </FormControl>
             </Flex>
@@ -170,9 +218,9 @@ const EditUser = ({ user, isOpen, onClose }: EditUserProps) => {
               isLoading={isSubmitting}
               isDisabled={!isDirty}
             >
-              Save
+              Сохранить
             </Button>
-            <Button onClick={onCancel}>Cancel</Button>
+            <Button onClick={onCancel}>Отменить</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

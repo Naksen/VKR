@@ -48,13 +48,13 @@ const AddLaundry = ({ isOpen, onClose }: AddLaundryProps) => {
 
   const mutation = useMutation(addLaundry, {
     onSuccess: () => {
-      showToast("Success!", "Laundry created successfully.", "success")
+      showToast("Успех!", "Прачечная создана успешно.", "success")
       reset()
       onClose()
     },
     onError: (err: ApiError) => {
       const errDetail = err.body?.detail
-      showToast("Something went wrong.", `${errDetail}`, "error")
+      showToast("Что-то пошло не так", `${errDetail}`, "error")
     },
     onSettled: () => {
       queryClient.invalidateQueries("laundries")

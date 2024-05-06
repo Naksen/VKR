@@ -7,25 +7,38 @@ import {
   useDisclosure,
 } from "@chakra-ui/react"
 import { BsThreeDotsVertical } from "react-icons/bs"
-import { FiEdit, FiTrash } from "react-icons/fi"
+import { FiEdit, FiTrash, FiClock } from "react-icons/fi"
+import { GrStatusGood } from "react-icons/gr";
+import { SlMagnifier } from "react-icons/sl";
 
-import type { ItemOut, UserOut, LaundryOut, PublicAreaOut } from "../../client"
+
+import type { ItemOut, UserOut, LaundryOut, PublicAreaOut, IssueOut } from "../../client"
 import EditUser from "../Admin/EditUser"
-import EditItem from "../Items/EditItem"
 import ReserveLaundry from "../Laundries/ReserveLaundry"
 import ReservePublicArea from "../PublicAreas/ReservePublicArea"
+import ShowDetails from "../Technical/ShowDetails"
+import ChangeStatus from "../Technical/ChangeStatus"
 import Delete from "./DeleteAlert"
+import EditLaundry from "../Laundries/EditLaundry";
+import EditPublicArea from "../PublicAreas/EditPublicArea";
+import EditIssue from "../Issues/EditIssue";
 
 interface ActionsMenuProps {
   type: string
-  value: ItemOut | UserOut | LaundryOut | PublicAreaOut
+  value: ItemOut | UserOut | LaundryOut | PublicAreaOut | IssueOut
   disabled?: boolean
 }
 
 const ActionsMenu = ({ type, value, disabled }: ActionsMenuProps) => {
   const editUserModal = useDisclosure()
   const reserveLaundryModal = useDisclosure()
+  const reservePublicAreaModal = useDisclosure()
   const deleteModal = useDisclosure()
+  const showDetailsModal = useDisclosure()
+  const changeStatusModal = useDisclosure()
+  const editLaundryModal = useDisclosure()
+  const editPublicAreaModal = useDisclosure()
+  const editIssueModal = useDisclosure()
 
   return (
     <>
@@ -37,50 +50,157 @@ const ActionsMenu = ({ type, value, disabled }: ActionsMenuProps) => {
           variant="unstyled"
         />
         <MenuList>
-          <MenuItem
-            onClick={editUserModal.onOpen}
-            icon={<FiEdit fontSize="16px" />}
-          >
-            Изменить
-          </MenuItem>
-          <MenuItem
-            onClick={deleteModal.onOpen}
-            icon={<FiTrash fontSize="16px" />}
-            color="ui.danger"
-          >
-            Удалить
-          </MenuItem>
-          <MenuItem
-            onClick={reserveLaundryModal.onOpen}
-            icon={<FiEdit fontSize="16px" />}
-          >
-            Забронировать
-          </MenuItem>
+          {type === "User" && (
+            <>
+              <MenuItem
+                onClick={editUserModal.onOpen}
+                icon={<FiEdit fontSize="16px" />}
+              >
+                Изменить
+              </MenuItem>
+              <MenuItem
+                onClick={deleteModal.onOpen}
+                icon={<FiTrash fontSize="16px" />}
+                color="red.600"
+              >
+                Удалить
+              </MenuItem>
+            </>
+          )}
+          {type === "Laundry" && (
+            <>
+              <MenuItem
+                onClick={reserveLaundryModal.onOpen}
+                icon={<FiClock fontSize="16px" />}
+              >
+                Забронировать
+              </MenuItem>
+              <MenuItem
+                onClick={editLaundryModal.onOpen}
+                icon={<FiEdit fontSize="16px" />}
+              >
+                Изменить
+              </MenuItem>
+              <MenuItem
+                onClick={deleteModal.onOpen}
+                icon={<FiTrash fontSize="16px" />}
+              >
+                Удалить
+              </MenuItem>
+            </>
+          )}
+          {type === "PublicArea" && (
+            <>
+              <MenuItem
+                onClick={reservePublicAreaModal.onOpen}
+                icon={<FiClock fontSize="16px" />}
+              >
+                Забронировать
+              </MenuItem>
+              <MenuItem
+                onClick={editPublicAreaModal.onOpen}
+                icon={<FiEdit fontSize="16px" />}
+              >
+                Изменить
+              </MenuItem>
+              <MenuItem
+                onClick={deleteModal.onOpen}
+                icon={<FiTrash fontSize="16px" />}
+              >
+                Удалить
+              </MenuItem>
+            </>
+
+          )}
+          {type == "Issue" && (
+            <>
+              <MenuItem
+                onClick={editIssueModal.onOpen}
+                icon={<FiEdit fontSize="16px" />}
+              >
+                Изменить
+              </MenuItem>
+              <MenuItem
+                onClick={deleteModal.onOpen}
+                icon={<FiTrash fontSize="16px" />}
+              >
+                Удалить
+              </MenuItem>
+            </>
+          )}
+          {type === "Technical" && (
+            <>
+            <MenuItem
+              onClick={showDetailsModal.onOpen}
+              icon={<SlMagnifier fontSize="16px" />}
+            >
+              Показать детали
+            </MenuItem>
+            <MenuItem
+              onClick={changeStatusModal.onOpen}
+              icon={<GrStatusGood fontSize="16px" />}
+            >
+              Изменить статус
+            </MenuItem>
+            </>
+          )}
         </MenuList>
-        {type === "User" ? (
+        {type === "User" && (
           <EditUser
             user={value as UserOut}
             isOpen={editUserModal.isOpen}
             onClose={editUserModal.onClose}
           />
-        ) : type == "Item" ?(
-          <EditItem
-            item={value as ItemOut}
-            isOpen={editUserModal.isOpen}
-            onClose={editUserModal.onClose}
+        )}
+        {type === "Laundry" && (
+          <>
+            <ReserveLaundry
+              laundry={value as LaundryOut}
+              isOpen={reserveLaundryModal.isOpen}
+              onClose={reserveLaundryModal.onClose}
+            />
+            <EditLaundry
+              laundry={value as LaundryOut}
+              isOpen={editLaundryModal.isOpen}
+              onClose={editLaundryModal.onClose}
+            />
+          </>
+        )}
+        {type == "Issue" && (
+          <EditIssue
+            issue={value as IssueOut}
+            isOpen={editIssueModal.isOpen}
+            onClose={editIssueModal.onClose}
           />
-        ) : type == "Laundry" ? (
-          <ReserveLaundry
-            laundry={value as LaundryOut}
-            isOpen={reserveLaundryModal.isOpen}
-            onClose={reserveLaundryModal.onClose}
-          />
-        ) : (
-          <ReservePublicArea
-            public_area={value as PublicAreaOut}
-            isOpen={reserveLaundryModal.isOpen}
-            onClose={reserveLaundryModal.onClose}
-          />
+        )
+        }
+        {type === "PublicArea" && (
+          <>
+            <ReservePublicArea
+              public_area={value as PublicAreaOut}
+              isOpen={reservePublicAreaModal.isOpen}
+              onClose={reservePublicAreaModal.onClose}
+            />
+            <EditPublicArea
+              public_area={value as PublicAreaOut}
+              isOpen={editPublicAreaModal.isOpen}
+              onClose={editPublicAreaModal.onClose}
+            />
+          </>
+        )}
+        {type === "Technical" && (
+          <>
+            <ShowDetails
+              issue_id={value.id}
+              isOpen={showDetailsModal.isOpen}
+              onClose={showDetailsModal.onClose}
+            />
+            <ChangeStatus
+              issue_id={value.id}
+              isOpen={changeStatusModal.isOpen}
+              onClose={changeStatusModal.onClose}
+            />
+          </>
         )}
         <Delete
           type={type}

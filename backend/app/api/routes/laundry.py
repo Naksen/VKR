@@ -93,6 +93,22 @@ def create_laundry(
     session.refresh(laundry)
     return laundry
 
+@router.put("/{id}", response_model=LaundryOut)
+def update_laundry(
+    *, session: SessionDep, current_user: CurrentUser, id: int, laundry_in: LaundryUpdate
+) -> Any:
+    laundry = session.get(Laundry, id)
+    if not laundry:
+        raise HTTPException(status_code=404, detail="Laundry not found")
+    if not current_user.is_superuser:
+        raise HTTPException(status_code=400, detail="Not enough permissions")
+    update_dict = laundry_in.model_dump(exclude_unset=True)
+    laundry.sqlmodel_update(update_dict)
+    session.add(laundry)
+    session.commit()
+    session.refresh(laundry)
+    return laundry
+
 @router.delete("/{id}")
 def delete_laundry(session: SessionDep, current_user: CurrentUser, id: int) -> Message:
     """

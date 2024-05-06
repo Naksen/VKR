@@ -14,14 +14,9 @@ import {
 import { createFileRoute } from "@tanstack/react-router"
 import { useQuery } from "react-query"
 
-import { type ApiError, type IIssueType, type IStatusEnum, IssuesService } from "../../client"
+import { type ApiError, type IIssueType, type IStatusEnum, TechnicalService } from "../../client"
 import ActionsMenu from "../../components/Common/ActionsMenu"
-import Navbar from "../../components/Common/Navbar"
 import useCustomToast from "../../hooks/useCustomToast"
-
-export const Route = createFileRoute("/_layout/issues")({
-component: Issues,
-})
 
 function translateIssueType(issueType?: IIssueType): string {
   switch (issueType) {
@@ -55,16 +50,18 @@ function translateIssueStatus(issueType?: IStatusEnum): string {
   }
 }
 
+export const Route = createFileRoute("/_layout/technical")({
+    component: Technical,
+})
 
-
-function Issues() {
+function Technical() {
     const showToast = useCustomToast()
     const {
       data: issues,
       isLoading,
       isError,
       error,
-    } = useQuery("issues", () => IssuesService.readIssues({}))
+    } = useQuery("technical", () => TechnicalService.readTechnicalIssues({}))
   
     if (isError) {
       const errDetail = (error as ApiError).body?.detail
@@ -85,32 +82,30 @@ function Issues() {
                 size="lg"
                 textAlign={{ base: "center", md: "left" }}
                 pt={12}
+                mb={12}
               >
-                Запросы
+                Запросы жильцов
               </Heading>
-              <Navbar type={"Issue"} />
               <TableContainer>
                 <Table size={{ base: "sm", md: "md" }}>
                   <Thead>
                     <Tr>
-                      <Th>ID</Th>
+                      <Th>Полное имя</Th>
+                      <Th>Почта</Th>
                       <Th>Тип</Th>
                       <Th>Статус</Th>
-                      <Th>Местоположение</Th>
-                      <Th>Описание</Th>
                       <Th>Действия</Th>
                     </Tr>
                   </Thead>
                   <Tbody>
                     {issues.data.map((issue) => (
                       <Tr key={issue.id}>
-                        <Td>{issue.id}</Td>
+                        <Td>{issue.full_name}</Td>
+                        <Td>{issue.email}</Td>
                         <Td>{translateIssueType(issue.issue_type)}</Td>
                         <Td>{translateIssueStatus(issue.status)}</Td>
-                        <Td>{issue.location}</Td>
-                        <Td>{issue.description}</Td>
                         <Td>
-                        <ActionsMenu type={"Issue"} value={issue} />
+                            <ActionsMenu type={"Technical"} value={issue} />
                         </Td>
                       </Tr>
                     ))}
@@ -124,5 +119,4 @@ function Issues() {
     )
   }
   
-export default Issues
-  
+export default Technical

@@ -46,13 +46,13 @@ const AddItem = ({ isOpen, onClose }: AddItemProps) => {
 
   const mutation = useMutation(addItem, {
     onSuccess: () => {
-      showToast("Success!", "Item created successfully.", "success")
+      showToast("Успех!", "Item created successfully.", "success")
       reset()
       onClose()
     },
     onError: (err: ApiError) => {
       const errDetail = err.body?.detail
-      showToast("Something went wrong.", `${errDetail}`, "error")
+      showToast("Что-то пошло не так", `${errDetail}`, "error")
     },
     onSettled: () => {
       queryClient.invalidateQueries("items")

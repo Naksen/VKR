@@ -39,12 +39,12 @@ const ChangePassword = () => {
 
   const mutation = useMutation(UpdatePassword, {
     onSuccess: () => {
-      showToast("Success!", "Password updated.", "success")
+      showToast("Успех!", "Пароль обновлен.", "success")
       reset()
     },
     onError: (err: ApiError) => {
       const errDetail = err.body?.detail
-      showToast("Something went wrong.", `${errDetail}`, "error")
+      showToast("Что-то пошло не так.", `${errDetail}`, "error")
     },
   })
 

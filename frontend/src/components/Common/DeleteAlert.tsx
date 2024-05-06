@@ -1,6 +1,5 @@
 import {
   AlertDialog,
-  AlertDialogBody,
   AlertDialogContent,
   AlertDialogFooter,
   AlertDialogHeader,
@@ -11,7 +10,7 @@ import React from "react"
 import { useForm } from "react-hook-form"
 import { useMutation, useQueryClient } from "react-query"
 
-import { ItemsService, UsersService } from "../../client"
+import { ItemsService, UsersService, LaundriesService, PublicAreaService, IssuesService } from "../../client"
 import useCustomToast from "../../hooks/useCustomToast"
 
 interface DeleteProps {
@@ -35,6 +34,12 @@ const Delete = ({ type, id, isOpen, onClose }: DeleteProps) => {
       await ItemsService.deleteItem({ id: id })
     } else if (type === "User") {
       await UsersService.deleteUser({ userId: id })
+    } else if (type == "Laundry") {
+      await LaundriesService.deleteLaundry({ id: id })
+    } else if (type == "PublicArea") {
+      await PublicAreaService.deletePublicArea({id: id})
+    } else if (type == "Issue") {
+      await IssuesService.deleteIssue({id: id})
     } else {
       throw new Error(`Unexpected type: ${type}`)
     }
@@ -43,21 +48,21 @@ const Delete = ({ type, id, isOpen, onClose }: DeleteProps) => {
   const mutation = useMutation(deleteEntity, {
     onSuccess: () => {
       showToast(
-        "Success",
-        `The ${type.toLowerCase()} was deleted successfully.`,
+        "Успешно",
+        `${type.toLowerCase()} был удален успешно.`,
         "success",
       )
       onClose()
     },
     onError: () => {
       showToast(
-        "An error occurred.",
-        `An error occurred while deleting the ${type.toLowerCase()}.`,
+        "Возникла ошибка",
+        `Ошибка вознила в процессе удаления ${type.toLowerCase()}.`,
         "error",
       )
     },
     onSettled: () => {
-      queryClient.invalidateQueries(type === "Item" ? "items" : "users")
+      queryClient.invalidateQueries(type === "Item" ? "items" : type == "User" ? "users" : type == "Laundry" ? "laundries" : type == "PublicArea" ? "public_areas" : "issues")
     },
   })
 
@@ -76,28 +81,18 @@ const Delete = ({ type, id, isOpen, onClose }: DeleteProps) => {
       >
         <AlertDialogOverlay>
           <AlertDialogContent as="form" onSubmit={handleSubmit(onSubmit)}>
-            <AlertDialogHeader>Delete {type}</AlertDialogHeader>
-
-            <AlertDialogBody>
-              {type === "User" && (
-                <span>
-                  All items associated with this user will also be{" "}
-                  <strong>permantly deleted. </strong>
-                </span>
-              )}
-              Are you sure? You will not be able to undo this action.
-            </AlertDialogBody>
+            <AlertDialogHeader>Удалить {type}</AlertDialogHeader>
 
             <AlertDialogFooter gap={3}>
               <Button variant="danger" type="submit" isLoading={isSubmitting}>
-                Delete
+               Удалить
               </Button>
               <Button
                 ref={cancelRef}
                 onClick={onClose}
                 isDisabled={isSubmitting}
               >
-                Cancel
+                Отменить
               </Button>
             </AlertDialogFooter>
           </AlertDialogContent>

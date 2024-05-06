@@ -38,7 +38,7 @@ function Admin() {
 
   if (isError) {
     const errDetail = (error as ApiError).body?.detail
-    showToast("Something went wrong.", `${errDetail}`, "error")
+    showToast("Что-то пошло не так.", `${errDetail}`, "error")
   }
 
   return (
@@ -65,6 +65,8 @@ function Admin() {
                   <Tr>
                     <Th>Полное имя</Th>
                     <Th>Почта</Th>
+                    <Th>Комната</Th>
+                    <Th>Учебная группа</Th>
                     <Th>Роль</Th>
                     <Th>Статус</Th>
                     <Th>Действия</Th>
@@ -82,7 +84,9 @@ function Admin() {
                         )}
                       </Td>
                       <Td>{user.email}</Td>
-                      <Td>{user.is_superuser ? "Superuser" : "User"}</Td>
+                      <Td>{user.room}</Td>
+                      <Td>{user.study_group}</Td>
+                      <Td>{user.is_superuser ? "Суперпользователь" : user.is_technical_staff ? "Техперсонал": "Пользователь"}</Td>
                       <Td>
                         <Flex gap={2}>
                           <Box
@@ -92,7 +96,7 @@ function Admin() {
                             bg={user.is_active ? "ui.success" : "ui.danger"}
                             alignSelf="center"
                           />
-                          {user.is_active ? "Active" : "Inactive"}
+                          {user.is_active ? "Активный" : "Неактивный"}
                         </Flex>
                       </Td>
                       <Td>

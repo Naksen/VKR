@@ -58,13 +58,13 @@ function ResetPassword() {
 
   const mutation = useMutation(resetPassword, {
     onSuccess: () => {
-      showToast("Success!", "Password updated.", "success")
+      showToast("Успех!", "Пароль обновлен.", "success")
       reset()
       navigate({ to: "/login" })
     },
     onError: (err: ApiError) => {
       const errDetail = err.body?.detail
-      showToast("Something went wrong.", `${errDetail}`, "error")
+      showToast("Что-то пошло не так.", `${errDetail}`, "error")
     },
   })
 

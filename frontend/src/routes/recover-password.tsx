@@ -43,8 +43,8 @@ function RecoverPassword() {
       email: data.email,
     })
     showToast(
-      "Email sent.",
-      "We sent an email with a link to get back into your account.",
+      "Письмо отправлено.",
+      "Мы отправили электронное письмо с ссылкой для возврата в ваш аккаунт.",
       "success",
     )
   }

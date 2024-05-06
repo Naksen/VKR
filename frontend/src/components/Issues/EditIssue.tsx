@@ -11,46 +11,46 @@ import {
     ModalFooter,
     ModalHeader,
     ModalOverlay,
-    Select
-} from "@chakra-ui/react"
-import { type SubmitHandler, useForm } from "react-hook-form"
-import { useMutation, useQueryClient } from "react-query"
-
-import { type ApiError, type IssueCreate, IssuesService} from "../../client"
-import useCustomToast from "../../hooks/useCustomToast"
-
-interface AddIssueProps {
-isOpen: boolean
-onClose: () => void
-}
-
-const AddIssue = ({ isOpen, onClose }: AddIssueProps) => {
+    Select,
+  } from "@chakra-ui/react"
+  import { type SubmitHandler, useForm } from "react-hook-form"
+  
+  import { useMutation, useQueryClient } from "react-query"
+  import {
+    type ApiError,
+    type IssueOut,
+    type IssueUpdate,
+    IssuesService,
+  } from "../../client"
+  import useCustomToast from "../../hooks/useCustomToast"
+  
+  interface EditIssueProps {
+    issue: IssueOut
+    isOpen: boolean
+    onClose: () => void
+  }
+  
+  const EditIssue = ({ issue, isOpen, onClose }: EditIssueProps) => {
     const queryClient = useQueryClient()
     const showToast = useCustomToast()
     const {
       register,
       handleSubmit,
       reset,
-      formState: { errors, isSubmitting },
-    } = useForm<IssueCreate>({
+      formState: { isSubmitting, errors, isDirty },
+    } = useForm<IssueUpdate>({
       mode: "onBlur",
       criteriaMode: "all",
-      defaultValues: {
-        issue_type: "other",
-        status: "new",
-        location: "",
-        description: "",
-      },
+      defaultValues: issue,
     })
   
-    const addIssue = async (data: IssueCreate) => {
-      await IssuesService.createIssue({ requestBody: data })
+    const updateItem = async (data: IssueUpdate) => {
+      await IssuesService.updateIssue({ id: issue.id, requestBody: data })
     }
   
-    const mutation = useMutation(addIssue, {
+    const mutation = useMutation(updateItem, {
       onSuccess: () => {
-        showToast("Успех!", "Запрос создан успешно.", "success")
-        reset()
+        showToast("Успешно!", "Запрос обновлен успешно.", "success")
         onClose()
       },
       onError: (err: ApiError) => {
@@ -62,8 +62,13 @@ const AddIssue = ({ isOpen, onClose }: AddIssueProps) => {
       },
     })
   
-    const onSubmit: SubmitHandler<IssueCreate> = (data) => {
+    const onSubmit: SubmitHandler<IssueUpdate> = async (data) => {
       mutation.mutate(data)
+    }
+  
+    const onCancel = () => {
+      reset()
+      onClose()
     }
   
     return (
@@ -76,7 +81,7 @@ const AddIssue = ({ isOpen, onClose }: AddIssueProps) => {
         >
           <ModalOverlay />
           <ModalContent as="form" onSubmit={handleSubmit(onSubmit)}>
-            <ModalHeader>Добавить запрос</ModalHeader>
+            <ModalHeader>Изменить прачечную</ModalHeader>
             <ModalCloseButton />
             <ModalBody pb={6}>
               <FormControl isRequired isInvalid={!!errors.issue_type}>
@@ -129,15 +134,21 @@ const AddIssue = ({ isOpen, onClose }: AddIssueProps) => {
               </FormControl>
             </ModalBody>
             <ModalFooter gap={3}>
-              <Button variant="primary" type="submit" isLoading={isSubmitting}>
+              <Button
+                variant="primary"
+                type="submit"
+                isLoading={isSubmitting}
+                isDisabled={!isDirty}
+              >
                 Сохранить
               </Button>
-              <Button onClick={onClose}>Отменить</Button>
+              <Button onClick={onCancel}>Отменить</Button>
             </ModalFooter>
           </ModalContent>
         </Modal>
       </>
     )
   }
-    
-export default AddIssue
+  
+  export default EditIssue
+  

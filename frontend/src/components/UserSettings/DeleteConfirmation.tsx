@@ -38,8 +38,8 @@ const DeleteConfirmation = ({ isOpen, onClose }: DeleteProps) => {
   const mutation = useMutation(deleteCurrentUser, {
     onSuccess: () => {
       showToast(
-        "Success",
-        "Your account has been successfully deleted.",
+        "Успешно",
+        "Ваш аккаун был успешно удален.",
         "success",
       )
       logout()
@@ -47,7 +47,7 @@ const DeleteConfirmation = ({ isOpen, onClose }: DeleteProps) => {
     },
     onError: (err: ApiError) => {
       const errDetail = err.body?.detail
-      showToast("Something went wrong.", `${errDetail}`, "error")
+      showToast("Что-то пошло не так.", `${errDetail}`, "error")
     },
     onSettled: () => {
       queryClient.invalidateQueries("currentUser")

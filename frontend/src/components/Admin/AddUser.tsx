@@ -60,13 +60,13 @@ const AddUser = ({ isOpen, onClose }: AddUserProps) => {
 
   const mutation = useMutation(addUser, {
     onSuccess: () => {
-      showToast("Success!", "User created successfully.", "success")
+      showToast("Успех!", "Пользователь создан успешно.", "success")
       reset()
       onClose()
     },
     onError: (err: ApiError) => {
       const errDetail = err.body?.detail
-      showToast("Something went wrong.", `${errDetail}`, "error")
+      showToast("Что-то пошло не так.", `${errDetail}`, "error")
     },
     onSettled: () => {
       queryClient.invalidateQueries("users")
@@ -115,6 +115,54 @@ const AddUser = ({ isOpen, onClose }: AddUserProps) => {
               />
               {errors.full_name && (
                 <FormErrorMessage>{errors.full_name.message}</FormErrorMessage>
+              )}
+            </FormControl>
+            <FormControl mt={4} isInvalid={!!errors.phone}>
+              <FormLabel htmlFor="phone">Телефон</FormLabel>
+              <Input
+                id="phone"
+                {...register("phone")}
+                placeholder="+7"
+                type="text"
+              />
+              {errors.phone && (
+                <FormErrorMessage>{errors.phone.message}</FormErrorMessage>
+              )}
+            </FormControl>
+            <FormControl mt={4} isInvalid={!!errors.room}>
+              <FormLabel htmlFor="room">Комната</FormLabel>
+              <Input
+                id="room"
+                {...register("room")}
+                placeholder="7104"
+                type="text"
+              />
+              {errors.room && (
+                <FormErrorMessage>{errors.room.message}</FormErrorMessage>
+              )}
+            </FormControl>
+            <FormControl mt={4} isInvalid={!!errors.study_group}>
+              <FormLabel htmlFor="study_group">Учебная группа</FormLabel>
+              <Input
+                id="study_group"
+                {...register("study_group")}
+                placeholder="М8О-408Б-20"
+                type="text"
+              />
+              {errors.study_group && (
+                <FormErrorMessage>{errors.study_group.message}</FormErrorMessage>
+              )}
+            </FormControl>
+            <FormControl mt={4} isInvalid={!!errors.institute}>
+              <FormLabel htmlFor="institute">Институт</FormLabel>
+              <Input
+                id="institute"
+                {...register("institute")}
+                placeholder="8"
+                type="text"
+              />
+              {errors.institute && (
+                <FormErrorMessage>{errors.institute.message}</FormErrorMessage>
               )}
             </FormControl>
             <FormControl mt={4} isRequired isInvalid={!!errors.password}>

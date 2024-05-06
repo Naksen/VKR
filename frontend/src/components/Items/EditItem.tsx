@@ -49,12 +49,12 @@ const EditItem = ({ item, isOpen, onClose }: EditItemProps) => {
 
   const mutation = useMutation(updateItem, {
     onSuccess: () => {
-      showToast("Success!", "Item updated successfully.", "success")
+      showToast("Успех!", "Item updated successfully.", "success")
       onClose()
     },
     onError: (err: ApiError) => {
       const errDetail = err.body?.detail
-      showToast("Something went wrong.", `${errDetail}`, "error")
+      showToast("Что-то пошло не так", `${errDetail}`, "error")
     },
     onSettled: () => {
       queryClient.invalidateQueries("items")

@@ -60,13 +60,13 @@ const ReservePublicArea = ({ public_area, isOpen, onClose }: ReservePublicAreaPr
 
     const mutation = useMutation(reservePublicArea, {
         onSuccess: () => {
-            showToast("Success!", "Public area reserved successfully.", "success");
+            showToast("Успех!", "Общественная зона забронирована успешно.", "success");
             reset();
             onClose();
         },
         onError: (err: ApiError) => {
             const errDetail = err.body?.detail;
-            showToast("Something went wrong.", `${errDetail}`, "error");
+            showToast("Что-то пошло не так.", `${errDetail}`, "error");
         },
         onSettled: () => {
             queryClient.invalidateQueries(['public_areaSchedules', public_area.id]);

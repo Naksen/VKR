@@ -60,13 +60,13 @@ const ReserveLaundry = ({ laundry, isOpen, onClose }: ReserveLaundryProps) => {
 
     const mutation = useMutation(reserveLaundry, {
         onSuccess: () => {
-            showToast("Success!", "Laundry reserved successfully.", "success");
+            showToast("Успех!", "Прачечная забронирована успешно.", "success");
             reset();
             onClose();
         },
         onError: (err: ApiError) => {
             const errDetail = err.body?.detail;
-            showToast("Something went wrong.", `${errDetail}`, "error");
+            showToast("Что-то пошло не так.", `${errDetail}`, "error");
         },
         onSettled: () => {
             queryClient.invalidateQueries(['laundrySchedules', laundry.id]);

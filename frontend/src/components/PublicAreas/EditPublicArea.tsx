@@ -12,71 +12,76 @@ import {
     ModalHeader,
     ModalOverlay,
     Select
-} from "@chakra-ui/react"
-import { type SubmitHandler, useForm } from "react-hook-form"
-import { useMutation, useQueryClient } from "react-query"
-
-import { type ApiError, type PublicAreaCreate, PublicAreaService} from "../../client"
-import useCustomToast from "../../hooks/useCustomToast"
-
-interface AddPublicAreaProps {
-isOpen: boolean
-onClose: () => void
-}
-
-const AddPublicArea = ({ isOpen, onClose }: AddPublicAreaProps) => {
+  } from "@chakra-ui/react"
+  import { type SubmitHandler, useForm } from "react-hook-form"
+  
+  import { useMutation, useQueryClient } from "react-query"
+  import {
+    type ApiError,
+    type PublicAreaOut,
+    type PublicAreaUpdate,
+    PublicAreaService,
+  } from "../../client"
+  import useCustomToast from "../../hooks/useCustomToast"
+  
+  interface EditPublicAreaProps {
+    public_area: PublicAreaOut
+    isOpen: boolean
+    onClose: () => void
+  }
+  
+  const EditPublicArea = ({ public_area, isOpen, onClose }: EditPublicAreaProps) => {
     const queryClient = useQueryClient()
     const showToast = useCustomToast()
     const {
-        register,
-        handleSubmit,
-        reset,
-        formState: { errors, isSubmitting },
-    } = useForm<PublicAreaCreate>({
-        mode: "onBlur",
-        criteriaMode: "all",
-        defaultValues: {
-        name: "",
-        description: "",
-        capacity: 1,
-        area_type: 'other'
-        },
+      register,
+      handleSubmit,
+      reset,
+      formState: { isSubmitting, errors, isDirty },
+    } = useForm<PublicAreaUpdate>({
+      mode: "onBlur",
+      criteriaMode: "all",
+      defaultValues: public_area,
     })
-
-    const addPublicArea = async (data: PublicAreaCreate) => {
-        await PublicAreaService.createPublicArea({ requestBody: data })
+  
+    const updateItem = async (data: PublicAreaUpdate) => {
+      await PublicAreaService.updatePublicArea({ id: public_area.id, requestBody: data })
     }
-
-    const mutation = useMutation(addPublicArea, {
-        onSuccess: () => {
-        showToast("Успех!", "Общественная зона создана успешно.", "success")
-        reset()
+  
+    const mutation = useMutation(updateItem, {
+      onSuccess: () => {
+        showToast("Успех!", "Общественная зона обновлена успешно.", "success")
         onClose()
-        },
-        onError: (err: ApiError) => {
+      },
+      onError: (err: ApiError) => {
         const errDetail = err.body?.detail
         showToast("Что-то пошло не так.", `${errDetail}`, "error")
-        },
-        onSettled: () => {
-        queryClient.invalidateQueries("public_areas")
-        },
+      },
+      onSettled: () => {
+        queryClient.invalidateQueries("public_area")
+      },
     })
-
-    const onSubmit: SubmitHandler<PublicAreaCreate> = (data) => {
-        mutation.mutate(data)
+  
+    const onSubmit: SubmitHandler<PublicAreaUpdate> = async (data) => {
+      mutation.mutate(data)
     }
-
+  
+    const onCancel = () => {
+      reset()
+      onClose()
+    }
+  
     return (
-        <>
+      <>
         <Modal
-            isOpen={isOpen}
-            onClose={onClose}
-            size={{ base: "sm", md: "md" }}
-            isCentered
+          isOpen={isOpen}
+          onClose={onClose}
+          size={{ base: "sm", md: "md" }}
+          isCentered
         >
-            <ModalOverlay />
-            <ModalContent as="form" onSubmit={handleSubmit(onSubmit)}>
-            <ModalHeader>Добавить общественную зону</ModalHeader>
+          <ModalOverlay />
+          <ModalContent as="form" onSubmit={handleSubmit(onSubmit)}>
+            <ModalHeader>Изменить общественную зону</ModalHeader>
             <ModalCloseButton />
             <ModalBody pb={6}>
                 <FormControl isRequired isInvalid={!!errors.name}>
@@ -86,7 +91,6 @@ const AddPublicArea = ({ isOpen, onClose }: AddPublicAreaProps) => {
                     {...register("name", {
                     required: "Название необходимо.",
                     })}
-                    placeholder="Название"
                     type="text"
                 />
                 {errors.name && (
@@ -98,7 +102,6 @@ const AddPublicArea = ({ isOpen, onClose }: AddPublicAreaProps) => {
                 <Input
                     id="description"
                     {...register("description")}
-                    placeholder="Описание"
                     type="text"
                 />
                 </FormControl>
@@ -107,7 +110,6 @@ const AddPublicArea = ({ isOpen, onClose }: AddPublicAreaProps) => {
                 <Input
                     id="capacity"
                     {...register("capacity")}
-                    placeholder="Capacity"
                     type="number"
                 />
                 </FormControl>
@@ -126,15 +128,21 @@ const AddPublicArea = ({ isOpen, onClose }: AddPublicAreaProps) => {
                 </FormControl>
             </ModalBody>
             <ModalFooter gap={3}>
-                <Button variant="primary" type="submit" isLoading={isSubmitting}>
+              <Button
+                variant="primary"
+                type="submit"
+                isLoading={isSubmitting}
+                isDisabled={!isDirty}
+              >
                 Сохранить
-                </Button>
-                <Button onClick={onClose}>Отменить</Button>
+              </Button>
+              <Button onClick={onCancel}>Отменить</Button>
             </ModalFooter>
-            </ModalContent>
+          </ModalContent>
         </Modal>
-        </>
+      </>
     )
-}
-
-export default AddPublicArea
+  }
+  
+  export default EditPublicArea
+  

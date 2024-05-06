@@ -22,6 +22,8 @@ import { Route as LayoutAdminImport } from './routes/_layout/admin'
 import { Route as LayoutLaundriesImport } from './routes/_layout/laundries'
 import { Route as LayoutPublicAreasImport } from './routes/_layout/public_areas'
 import { Route as LayoutIssuesImport } from './routes/_layout/issues'
+import { Route as LayoutTechnicalImport} from '.rotes/_layout/technical'
+import { getPackedSettings } from 'http2'
 
 // Create/Update Routes
 
@@ -80,6 +82,11 @@ const LayoutIssuesRoute = LayoutIssuesImport.update({
   getParentRoute: () => LayoutRoute,
 } as any)
 
+const LayoutTechnicalRoute = LayoutTechnicalImport.update({
+  path: '/technical',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -120,6 +127,10 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutIssuesImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/technical': {
+      preLoaderRoute: typeof LayoutTechnicalImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/settings': {
       preLoaderRoute: typeof LayoutSettingsImport
       parentRoute: typeof LayoutImport
@@ -140,6 +151,7 @@ export const routeTree = rootRoute.addChildren([
     LayoutLaundriesRoute,
     LayoutPublicAreasRoute,
     LayoutIssuesRoute,
+    LayoutTechnicalRoute,
     LayoutSettingsRoute,
     LayoutIndexRoute,
   ]),

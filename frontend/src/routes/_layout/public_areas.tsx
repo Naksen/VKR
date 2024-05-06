@@ -14,7 +14,7 @@ import {
 import { createFileRoute } from "@tanstack/react-router"
 import { useQuery } from "react-query"
 
-import { type ApiError, PublicAreaService } from "../../client"
+import { type ApiError, type AreaEnum, PublicAreaService } from "../../client"
 import ActionsMenu from "../../components/Common/ActionsMenu"
 import Navbar from "../../components/Common/Navbar"
 import useCustomToast from "../../hooks/useCustomToast"
@@ -23,6 +23,21 @@ export const Route = createFileRoute("/_layout/public_areas")({
 component: PublicAreas,
 })
 
+
+function translateType(issueType?: AreaEnum | null): string {
+  switch (issueType) {
+      case 'sport':
+          return 'Спортивная';
+      case 'dancing':
+          return 'Танцевальная';
+      case 'gaming':
+          return 'Игровая';
+      case 'other':
+          return 'Другая';
+      default:
+        return 'Неизвестный тип';
+  }
+}
 
 function PublicAreas() {
     const showToast = useCustomToast()
@@ -35,7 +50,7 @@ function PublicAreas() {
   
     if (isError) {
       const errDetail = (error as ApiError).body?.detail
-      showToast("Something went wrong.", `${errDetail}`, "error")
+      showToast("Что-то пошло не так.", `${errDetail}`, "error")
     }
   
     return (
@@ -75,7 +90,7 @@ function PublicAreas() {
                         <Td>{public_area.name}</Td>
                         <Td>{public_area.description}</Td>
                         <Td>{public_area.capacity}</Td>
-                        <Td>{public_area.area_type}</Td>
+                        <Td>{translateType(public_area.area_type)}</Td>
                         <Td>
                         <ActionsMenu type={"PublicArea"} value={public_area} />
                       </Td>
