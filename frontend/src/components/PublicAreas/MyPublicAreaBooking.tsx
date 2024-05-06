@@ -13,11 +13,13 @@ import {
     Tr,
     Th,
     Td,
-    Text
+    Text,
+    TableContainer
 } from "@chakra-ui/react";
 import { useQuery } from "react-query";
 import { format } from "date-fns";
 import { ru } from "date-fns/locale";
+import ActionsMenu from "../../components/Common/ActionsMenu"
 
 import { type ApiError, type PublicAreaSchedulesOut, SchedulesService } from "../../client";
 
@@ -54,26 +56,32 @@ const MyPublicAreaSchedules = ({ isOpen, onClose }: PublicAreaSchedulesProps) =>
                     {isLoading ? (
                         <Text>Loading...</Text>
                     ) : (
-                        <Table variant="simple">
-                            <Thead>
-                                <Tr>
-                                    <Th>Название зоны</Th>
-                                    <Th>Тип зоны</Th>
-                                    <Th>Время начала</Th>
-                                    <Th>Время окончания</Th>
-                                </Tr>
-                            </Thead>
-                            <Tbody>
-                                {data?.data.map((schedule) => (
-                                    <Tr key={schedule.id}>
-                                        <Td>{schedule.name}</Td>
-                                        <Td>{schedule.area_type}</Td>
-                                        <Td>{formatDate(schedule.start_time)}</Td>
-                                        <Td>{formatDate(schedule.end_time)}</Td>
+                        <TableContainer>
+                            <Table variant="simple">
+                                <Thead>
+                                    <Tr>
+                                        <Th>Название зоны</Th>
+                                        <Th>Тип зоны</Th>
+                                        <Th>Время начала</Th>
+                                        <Th>Время окончания</Th>
+                                        <Th>Действия</Th>
                                     </Tr>
-                                ))}
-                            </Tbody>
-                        </Table>
+                                </Thead>
+                                <Tbody>
+                                    {data?.data.map((schedule) => (
+                                        <Tr key={schedule.id}>
+                                            <Td>{schedule.name}</Td>
+                                            <Td>{schedule.area_type}</Td>
+                                            <Td>{formatDate(schedule.start_time)}</Td>
+                                            <Td>{formatDate(schedule.end_time)}</Td>
+                                            <Td>
+                                                <ActionsMenu type={"PublicAreaSchedule"} value={schedule} />
+                                            </Td>
+                                        </Tr>
+                                    ))}
+                                </Tbody>
+                            </Table>
+                        </TableContainer>
                     )}
                 </ModalBody>
                 <ModalFooter>

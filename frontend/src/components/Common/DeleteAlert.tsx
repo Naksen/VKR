@@ -10,7 +10,7 @@ import React from "react"
 import { useForm } from "react-hook-form"
 import { useMutation, useQueryClient } from "react-query"
 
-import { ItemsService, UsersService, LaundriesService, PublicAreaService, IssuesService } from "../../client"
+import { ItemsService, UsersService, LaundriesService, PublicAreaService, IssuesService, SchedulesService} from "../../client"
 import useCustomToast from "../../hooks/useCustomToast"
 
 interface DeleteProps {
@@ -40,6 +40,10 @@ const Delete = ({ type, id, isOpen, onClose }: DeleteProps) => {
       await PublicAreaService.deletePublicArea({id: id})
     } else if (type == "Issue") {
       await IssuesService.deleteIssue({id: id})
+    } else if (type == "LaundrySchedule") {
+      await SchedulesService.deleteLaundrySchedule({id: id})
+    } else if (type == "PublicAreaSchedule") {
+      await SchedulesService.deletePublicAreaSchedule({id: id})
     } else {
       throw new Error(`Unexpected type: ${type}`)
     }
@@ -49,7 +53,7 @@ const Delete = ({ type, id, isOpen, onClose }: DeleteProps) => {
     onSuccess: () => {
       showToast(
         "Успешно",
-        `${type.toLowerCase()} был удален успешно.`,
+        `Удален успешно.`,
         "success",
       )
       onClose()
@@ -62,7 +66,7 @@ const Delete = ({ type, id, isOpen, onClose }: DeleteProps) => {
       )
     },
     onSettled: () => {
-      queryClient.invalidateQueries(type === "Item" ? "items" : type == "User" ? "users" : type == "Laundry" ? "laundries" : type == "PublicArea" ? "public_areas" : "issues")
+      queryClient.invalidateQueries(type === "Item" ? "items" : type == "User" ? "users" : type == "Laundry" ? "laundries" : type == "PublicArea" ? "public_areas" :  type ==  "Issue" ? "issues": type == "LaundrySchedule" ? "laundry_schedule": "public_area_schedule")
     },
   })
 

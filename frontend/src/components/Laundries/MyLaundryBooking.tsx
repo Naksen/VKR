@@ -13,11 +13,13 @@ import {
     Tr,
     Th,
     Td,
-    Text
+    Text,
+    TableContainer
 } from "@chakra-ui/react";
 import { useQuery } from "react-query";
 import { format } from "date-fns";
 import { ru } from "date-fns/locale";
+import ActionsMenu from "../../components/Common/ActionsMenu"
 
 import { type ApiError, type LaundrySchedulesOut, SchedulesService } from "../../client";
 
@@ -43,7 +45,7 @@ const MyLaundrySchedules = ({ isOpen, onClose }: LaundrySchedulesProps) => {
         <Modal
             isOpen={isOpen}
             onClose={onClose}
-            size={{ base: "sm", md: "lg" }} // Изменен размер для лучшего отображения таблицы
+            size={{ base: "sm", md: "xl" }} // Изменен размер для лучшего отображения таблицы
             isCentered
         >
             <ModalOverlay />
@@ -54,26 +56,32 @@ const MyLaundrySchedules = ({ isOpen, onClose }: LaundrySchedulesProps) => {
                     {isLoading ? (
                         <Text>Loading...</Text>
                     ) : (
-                        <Table variant="simple">
-                            <Thead>
-                                <Tr>
-                                    <Th>Номер комнаты</Th>
-                                    <Th>Номер машины</Th>
-                                    <Th>Время начала</Th>
-                                    <Th>Время окончания</Th>
-                                </Tr>
-                            </Thead>
-                            <Tbody>
-                                {data?.data.map((schedule) => (
-                                    <Tr key={schedule.id}>
-                                        <Td>{schedule.room}</Td>
-                                        <Td>{schedule.washing_machine_number}</Td>
-                                        <Td>{formatDate(schedule.start_time)}</Td>
-                                        <Td>{formatDate(schedule.end_time)}</Td>
+                        <TableContainer>
+                            <Table size={{ base: "sm", md: "md"}}>
+                                <Thead>
+                                    <Tr>
+                                        <Th>Номер комнаты</Th>
+                                        <Th>Номер машины</Th>
+                                        <Th>Время начала</Th>
+                                        <Th>Время окончания</Th>
+                                        <Th width="10%">Действия</Th>
                                     </Tr>
-                                ))}
-                            </Tbody>
-                        </Table>
+                                </Thead>
+                                <Tbody>
+                                    {data?.data.map((schedule) => (
+                                        <Tr key={schedule.id}>
+                                            <Td>{schedule.room}</Td>
+                                            <Td>{schedule.washing_machine_number}</Td>
+                                            <Td>{formatDate(schedule.start_time)}</Td>
+                                            <Td>{formatDate(schedule.end_time)}</Td>
+                                            <Td>
+                                                <ActionsMenu type={"LaundrySchedule"} value={schedule} />
+                                            </Td>
+                                        </Tr>
+                                    ))}
+                                </Tbody>
+                            </Table>
+                        </TableContainer>
                     )}
                 </ModalBody>
                 <ModalFooter>

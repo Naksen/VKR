@@ -21,7 +21,7 @@ import {
 import React from "react"
 import { type SubmitHandler, useForm } from "react-hook-form"
 
-import Logo from "../assets/images/fastapi-logo.svg"
+import Logo from "../assets/images/vkr_logo.png"
 import type { ApiError } from "../client"
 import type { Body_login_login_access_token as AccessToken } from "../client/models/Body_login_login_access_token"
 import useAuth, { isLoggedIn } from "../hooks/useAuth"

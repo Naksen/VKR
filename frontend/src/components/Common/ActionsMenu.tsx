@@ -12,7 +12,7 @@ import { GrStatusGood } from "react-icons/gr";
 import { SlMagnifier } from "react-icons/sl";
 
 
-import type { ItemOut, UserOut, LaundryOut, PublicAreaOut, IssueOut } from "../../client"
+import type { ItemOut, UserOut, LaundryOut, PublicAreaOut, IssueOut, LaundryScheduleOut, PublicAreaScheduleOut } from "../../client"
 import EditUser from "../Admin/EditUser"
 import ReserveLaundry from "../Laundries/ReserveLaundry"
 import ReservePublicArea from "../PublicAreas/ReservePublicArea"
@@ -25,7 +25,7 @@ import EditIssue from "../Issues/EditIssue";
 
 interface ActionsMenuProps {
   type: string
-  value: ItemOut | UserOut | LaundryOut | PublicAreaOut | IssueOut
+  value: ItemOut | UserOut | LaundryOut | PublicAreaOut | IssueOut | LaundryScheduleOut | PublicAreaScheduleOut
   disabled?: boolean
 }
 
@@ -120,6 +120,26 @@ const ActionsMenu = ({ type, value, disabled }: ActionsMenuProps) => {
               >
                 Изменить
               </MenuItem>
+              <MenuItem
+                onClick={deleteModal.onOpen}
+                icon={<FiTrash fontSize="16px" />}
+              >
+                Удалить
+              </MenuItem>
+            </>
+          )}
+          {type == "LaundrySchedule" && (
+            <>
+              <MenuItem
+                onClick={deleteModal.onOpen}
+                icon={<FiTrash fontSize="16px" />}
+              >
+                Удалить
+              </MenuItem>
+            </>
+          )}
+          {type == "PublicAreaSchedule" && (
+            <>
               <MenuItem
                 onClick={deleteModal.onOpen}
                 icon={<FiTrash fontSize="16px" />}
