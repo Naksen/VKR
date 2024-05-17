@@ -9,6 +9,8 @@ import AddIssue from "../Issues/AddIssue"
 import MyLaundrySchedules from "../Laundries/MyLaundryBooking"
 import MyPublicAreaSchedules from "../PublicAreas/MyPublicAreaBooking"
 
+import useAuth from "../../hooks/useAuth"
+
 interface NavbarProps {
   type: string
 }
@@ -21,6 +23,7 @@ const Navbar = ({ type }: NavbarProps) => {
   const addIssueModal = useDisclosure()
   const myLaundrySchedulesModal = useDisclosure()
   const myPublicAreaSchedulesModal = useDisclosure()
+  const { user: currentUser } = useAuth()
 
   return (
     <>
@@ -32,19 +35,28 @@ const Navbar = ({ type }: NavbarProps) => {
                     </InputLeftElement>
                     <Input type='text' placeholder='Search' fontSize={{ base: 'sm', md: 'inherit' }} borderRadius='8px' />
                 </InputGroup> */}
-        <Button
-          variant="primary"
-          gap={1}
-          fontSize={{ base: "sm", md: "inherit" }}
-          onClick={type === "User" ? addUserModal.onOpen 
-          : type === "Item" ? addItemModal.onOpen 
-          : type == "PublicArea" ? addPublicAreaModal.onOpen
-          : type == "Issue" ? addIssueModal.onOpen
-          : addLaundryModal.onOpen}
-        >
-          <Icon as={FaPlus} /> Добавить
-        </Button>
-        {type === "Laundry" && (
+        {currentUser?.is_superuser && (type === "User" || type === "Laundry" || type === "PublicArea" || type === "Issue") && (
+          <Button
+            variant="primary"
+            gap={1}
+            fontSize={{ base: "sm", md: "inherit" }}
+            onClick={type === "User" ? addUserModal.onOpen 
+            : type == "PublicArea" ? addPublicAreaModal.onOpen
+            : type == "Issue" ? addIssueModal.onOpen
+            : addLaundryModal.onOpen}
+          >
+            <Icon as={FaPlus} /> Добавить
+          </Button>
+        )}
+        {type === "Issue" && !currentUser?.is_superuser && (
+          <Button
+            variant="primary"
+            onClick={addIssueModal.onOpen}
+          >
+            <Icon as={FaPlus} /> Добавить
+          </Button>
+        )}
+        {type === "Laundry" && !currentUser?.is_superuser && (
           <Button
             variant="primary"
             onClick={myLaundrySchedulesModal.onOpen}
@@ -52,7 +64,7 @@ const Navbar = ({ type }: NavbarProps) => {
             Мои бронирования
           </Button>
         )}
-        {type === "PublicArea" && (
+        {type === "PublicArea" && !currentUser?.is_superuser && (
           <Button
             variant="primary"
             onClick={myPublicAreaSchedulesModal.onOpen}

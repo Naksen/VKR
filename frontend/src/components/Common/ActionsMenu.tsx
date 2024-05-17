@@ -23,6 +23,7 @@ import EditLaundry from "../Laundries/EditLaundry";
 import EditPublicArea from "../PublicAreas/EditPublicArea";
 import EditIssue from "../Issues/EditIssue";
 
+import useAuth from "../../hooks/useAuth"
 interface ActionsMenuProps {
   type: string
   value: ItemOut | UserOut | LaundryOut | PublicAreaOut | IssueOut | LaundryScheduleOut | PublicAreaScheduleOut
@@ -39,6 +40,7 @@ const ActionsMenu = ({ type, value, disabled }: ActionsMenuProps) => {
   const editLaundryModal = useDisclosure()
   const editPublicAreaModal = useDisclosure()
   const editIssueModal = useDisclosure()
+  const { user: currentUser } = useAuth()
 
   return (
     <>
@@ -75,18 +77,22 @@ const ActionsMenu = ({ type, value, disabled }: ActionsMenuProps) => {
               >
                 Забронировать
               </MenuItem>
-              <MenuItem
-                onClick={editLaundryModal.onOpen}
-                icon={<FiEdit fontSize="16px" />}
-              >
-                Изменить
-              </MenuItem>
-              <MenuItem
-                onClick={deleteModal.onOpen}
-                icon={<FiTrash fontSize="16px" />}
-              >
-                Удалить
-              </MenuItem>
+              {currentUser?.is_superuser && (
+              <>
+                <MenuItem
+                  onClick={editLaundryModal.onOpen}
+                  icon={<FiEdit fontSize="16px" />}
+                >
+                  Изменить
+                </MenuItem>
+                <MenuItem
+                  onClick={deleteModal.onOpen}
+                  icon={<FiTrash fontSize="16px" />}
+                >
+                  Удалить
+                </MenuItem>
+              </>
+              )}
             </>
           )}
           {type === "PublicArea" && (
@@ -97,18 +103,22 @@ const ActionsMenu = ({ type, value, disabled }: ActionsMenuProps) => {
               >
                 Забронировать
               </MenuItem>
-              <MenuItem
-                onClick={editPublicAreaModal.onOpen}
-                icon={<FiEdit fontSize="16px" />}
-              >
-                Изменить
-              </MenuItem>
-              <MenuItem
-                onClick={deleteModal.onOpen}
-                icon={<FiTrash fontSize="16px" />}
-              >
-                Удалить
-              </MenuItem>
+              {currentUser?.is_superuser && (
+              <>
+                <MenuItem
+                  onClick={editPublicAreaModal.onOpen}
+                  icon={<FiEdit fontSize="16px" />}
+                >
+                  Изменить
+                </MenuItem>
+                <MenuItem
+                  onClick={deleteModal.onOpen}
+                  icon={<FiTrash fontSize="16px" />}
+                >
+                  Удалить
+                </MenuItem>
+              </>
+              )}
             </>
 
           )}

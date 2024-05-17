@@ -11,7 +11,7 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  Checkbox,
+  // Checkbox,
 } from "@chakra-ui/react"
 import { type SubmitHandler, useForm } from "react-hook-form"
 import { useMutation, useQueryClient } from "react-query"
@@ -101,7 +101,7 @@ const AddLaundry = ({ isOpen, onClose }: AddLaundryProps) => {
                 type="number"
               />
             </FormControl>
-            <FormControl mt={4}>
+            {/* <FormControl mt={4}>
                 <FormLabel htmlFor="is_busy">Занята</FormLabel>
                 <Checkbox
                     id="is_busy"
@@ -109,7 +109,8 @@ const AddLaundry = ({ isOpen, onClose }: AddLaundryProps) => {
                     colorScheme="teal"
                 >
                 </Checkbox>
-            </FormControl>
+            </FormControl> */}
+            
           </ModalBody>
           <ModalFooter gap={3}>
             <Button variant="primary" type="submit" isLoading={isSubmitting}>
