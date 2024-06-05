@@ -209,7 +209,7 @@ def delete_user(
         )
     elif user == current_user and current_user.is_superuser:
         raise HTTPException(
-            status_code=403, detail="Суперпользователи не имею права удалять сами себя"
+            status_code=403, detail="Суперпользователи не имеют права удалять сами себя"
         )
 
     statement = delete(Item).where(col(Item.owner_id) == user_id)
